@@ -1,0 +1,10 @@
++Section({name :'home'})
+      +Section({ name :'preface' })
+            h1 React Starter
+            img(src='assets/images/starter-react.svg' alt='Starter React')
+      +Section({ name :'preface-about' })
+            h2 Contributeurs
+            div(class=`${prefix}-cards-flex`) 
+                  +Card({ modifier:'user', title: 'Johan Korger', content: "Lead Front-end", img: 'johan.jpg', fragment: false, socials: { twitter: 'gamuez'}  })
+                  +Card({ modifier:'user', title: 'Samuel Gomez', content: "Lead Front-end", img: 'sam.jpg', fragment: false, socials: { twitter: 'gamuez'}   })
+      

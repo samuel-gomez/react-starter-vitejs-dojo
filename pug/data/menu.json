@@ -1,0 +1,29 @@
+{
+  "main": [
+    {
+      "href": "/#/",
+      "label": "Accueil",
+      "icon": "HomeIcon"
+    },
+    {
+      "href": "/#/besoin/3",
+      "label": "Besoin",
+      "icon": "NeedIcon"
+    },
+    {
+      "href": "/#/stack/11",
+      "label": "Stack",
+      "icon": "StackIcon"
+    },
+    {
+      "href": "/#/features/11",
+      "label": "Features",
+      "icon": "StarIcon"
+    },
+    {
+      "href": "/#/get-started",
+      "label": "Get Started",
+      "icon": "PlayIcon"
+    }
+  ]
+}

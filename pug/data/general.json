@@ -1,0 +1,11 @@
+{
+  "author": "Samuel Gomez",
+  "title": "React Starter - workshop",
+  "geography": "Lille, France, 59000",
+  "lang": "fr",
+  "email": "samuel.gomez@axa.fr",
+  "copyright": "2023 Samuel Gomez",
+  "description": "Samuel Gomez OpenSource Axa Front-End Nodejs React à Lille.",
+  "keywords": "Samuel Gomez, développeur frontend, Open Source,Open source Axa, Axa France",
+  "avatar": "assets/images/axa.svg"
+}

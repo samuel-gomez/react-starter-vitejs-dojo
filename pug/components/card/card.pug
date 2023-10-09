@@ -1,0 +1,12 @@
+mixin Card({  modifier='', name = 'card', img= '', title, content, fragment= false, socials = false})
+    -const classComponent = `${setClass(name, modifier, false)}`
+    article(class=`${classComponent}${fragment ? ' fragment' : ''} fade-up`)  
+        if(img !== '')
+            +Img({ className: `${prefix}-${name}__image`, img})                     
+        h3(class=`${prefix}-${name}__title`)   #{title}
+        p(class=`${prefix}-${name}__content`)  #{content}
+        if(socials)
+            footer(class=`${prefix}-${name}__footer`)  
+                if(socials.twitter)
+                    a(class=`${prefix}-${name}__footer-link` href=`https://twitter.com/${socials.twitter}` title="Voir le compte twitter")
+                        +TwitterIcon({className : `${prefix}-${name}__footer-icon`})

@@ -1,0 +1,13 @@
+extends ./layouts/main
+
+block menu
+  +Menu({ activePath: '/#/'})
+
+block content
+  include ./slides/preface/preface.pug
+  include ./slides/besoin/besoin.pug
+  include ./slides/stack/stack.pug
+  include ./slides/features/features.pug
+  include ./slides/structure/structure.pug
+  include ./slides/getstarted/getstarted.pug
+
