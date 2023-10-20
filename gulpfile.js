@@ -397,6 +397,5 @@ gulp.task("serve", () => {
   );
 
   gulp.watch(["pug/**/*.pug"], gulp.series("pug"));
-
   gulp.watch(["test/*.html"], gulp.series("test"));
 });

@@ -116,5 +116,8 @@ $headerHeight: 53px;
         }
       }
     }
+    .#{$prefix}-svg--circle {
+      width: 30px;
+    }
   }
 }

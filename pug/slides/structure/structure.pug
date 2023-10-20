@@ -1,15 +1,4 @@
+-const { tree } = require('./pug/slides/structure/data.js') 
 +Section({ name :'structure' })
       h1 Structure
-      pre 
-        code(data-trim data-line-numbers="1-2|3-5|8-10")
-            table.table
-                tbody
-                    tr
-                        td Apples
-                        td $1
-                        td 7
-                    tr
-                        td Oranges
-                        td $2
-                        td 18
-      
+      +Tree({ tree })  

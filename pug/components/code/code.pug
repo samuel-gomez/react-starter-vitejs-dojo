@@ -1,0 +1,4 @@
+mixin Code({ modifier = '', name='code', content, dataLineNumbers="", start= "", language="language-javascript" })
+	-const classComponent = setClass(name, modifier, js)	
+	code(class=`${language} ${classComponent}` data-trim data-line-numbers=dataLineNumbers, data-ln-start-from=start) #{content} 
+		

@@ -6,24 +6,34 @@
       "icon": "HomeIcon"
     },
     {
-      "href": "/#/besoin/3",
+      "href": "/#/besoin",
       "label": "Besoin",
       "icon": "NeedIcon"
     },
     {
-      "href": "/#/stack/11",
+      "href": "/#/stack-technique",
       "label": "Stack",
       "icon": "StackIcon"
     },
     {
-      "href": "/#/features/11",
-      "label": "Features",
-      "icon": "StarIcon"
+      "href": "/#/structure",
+      "label": "Structure",
+      "icon": "TreeIcon"
     },
     {
-      "href": "/#/get-started",
+      "href": "/#/playground",
+      "label": "Playground",
+      "icon": "SlashIcon"
+    },
+    {
+      "href": "/#/get-started-intro",
       "label": "Get Started",
       "icon": "PlayIcon"
+    },
+    {
+      "href": "/#/exo1-intro",
+      "label": "Exo 1",
+      "icon": "WorkIcon"
     }
   ]
 }
