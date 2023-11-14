@@ -79,7 +79,7 @@
             pre.code-wrapper--notes(data-id="code-animation")  
                   +Notes({ notes: notes.featurePeople })
                   +Code({ content :files.featurePeople[1], dataLineNumbers: "2-7,10-17" , language: 'gherkin'})                       
-      +Section({ name :'exo1-cucumber-5', autoAnimate: true })           
+      +Section({ name :'exo1-cucumber-5', autoAnimate: true })            
             h2 Modifier le fichier de test
             pre                  
                   +Code({ dataLineNumbers: false, content : 'npm t People.spec.tsx'}) 
@@ -98,7 +98,7 @@
             pre.code-wrapper--notes(data-id="code-animation")  
                   +Notes({ notes: notes.constants })
                   +Code({ content : files.constants[1],  dataLineNumbers: "4, 5,7-12"  })  
-      +Section({ name :'exo1-donnees-typage', autoAnimate: true })           
+      +Section({ name :'exo1-donnees-typage', autoAnimate: true })            
             h2 Typer les données
             span.file #{rootPagePeople}People.tsx : type
             pre(data-id="code-animation")  
@@ -128,7 +128,7 @@
       +Section({ name :'exo1-cucumber-9'})           
             h2 Formatage des données 
             span.file #{rootPagePeople}People.tsx : 
-                  em computeInfos
+                  em computeInfos 
             .r-stack
                   pre.code-wrapper--notes.fragment.fade-in-then-out  
                         +Notes({ notes: notes.computeInfos[0], fragment: false })
@@ -189,7 +189,7 @@
             h2 Ajout de tests unitaires
             span.file #{rootPagePeople}__tests__/People.test.tsx
             .r-stack
-                  pre.fragment.fade-in-then-out  
+                  pre.fragment.fade-in-then-out                        
                         +Notes({ notes: notes.unitTestPeople[0], fragment: false })
                         +Code({ content : files.unitTestPeople[0]  }) 
                         +Notes({ notes: notes.unitTestPeople[1], fragment: false, modifier: 'right' })
@@ -214,3 +214,4 @@
                         +Code({ content : files.unitTestPeople[5] ,  dataLineNumbers: "9"  })  
                   pre.fragment.fade-in-then-out  
                         +Code({ content : files.unitTestPeople[5]  })
+      

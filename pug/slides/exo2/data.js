@@ -15,7 +15,7 @@ export const TABLE_HEADERS_PEOPLE = [
   { label: 'Prénom', id: 'firstname', key: 'firstname' },
   { label: 'Nom', id: 'lastname', key: 'lastname' },
   { label: 'Date de naissance', id: 'birthDate', key: 'birthDate' },
-  { label: 'Entité', id: 'entity', key: 'entity' },
+  { label: 'Photo', id: 'photo', key: 'photo' },
 ];`,
     ],
     people: [
@@ -56,13 +56,13 @@ export default People;`,
 };
 export type TReturnUsePeople = ReturnType<typeof usePeople>;`,
       `export const computeInfos = (data: TPeopleData[]) =>
-data?.map(({ _id, firstname, lastname, birthDate, entity }) => ({
+data?.map(({ _id, firstname, lastname, birthDate, photo }) => ({
   key: _id,
   cols: {
     ...setDisplay({ firstname }),
     ...setDisplay({ lastname }),
     ...setDisplay({ birthDate: setDate({ date: birthDate }) }),
-    ...setDisplay({ entity }),
+    ...setDisplay({ photo }),
   },
 }));`,
       `const PeopleContainer = () => {
@@ -153,21 +153,21 @@ const PagePeople = lazy(() => import('pages/People'));
       `,
       `Given Je suis un utilisateur connu et connecté avec le profil "<profil>"
 And la page reçoit les données suivantes
-  | _id | firstname | lastname | birthDate           | photo                                        | entity    | manager | managerId |
-  | 1   | Samuel    | Gomez    | 1983-10-20T00:00:00 | https://randomuser.me/portraits/men/34.jpg   | BIOSPAN   | Sophie  | 4         |
-  | 2   | John      | Doe      | 1978-10-20T00:00:00 | https://randomuser.me/portraits/men/34.jpg   | PEARLESSA | Sophie  | 4         |
-  | 3   | Guillaume | Chervet  | 1985-10-20T00:00:00 | https://randomuser.me/portraits/men/34.jpg   | CIRCUM    | Sophie  | 4         |
-  | 4   | Sophie    | Danneels | 1992-10-20T00:00:00 | https://randomuser.me/portraits/women/85.jpg | TRIPSCH   |         |           |
+  | _id | firstname | lastname | birthDate           | photo                                        |
+  | 1   | Samuel    | Gomez    | 1983-10-20T00:00:00 | https://randomuser.me/portraits/men/34.jpg   |
+  | 2   | John      | Doe      | 1978-10-20T00:00:00 | https://randomuser.me/portraits/men/34.jpg   |
+  | 3   | Guillaume | Chervet  | 1985-10-20T00:00:00 | https://randomuser.me/portraits/men/34.jpg   |
+  | 4   | Sophie    | Danneels | 1992-10-20T00:00:00 | https://randomuser.me/portraits/women/85.jpg |
 When J'accède à la page People
 Then un titre "Tableau des gens" est visible
 And la page contient un tableau répertoriant la liste des gens
-And le tableau présente des entêtes de colonnes dans l’ordre suivant : "Nom", "Prénom", "Date de naissance", "Entité"
+And le tableau présente des entêtes de colonnes dans l’ordre suivant : "Nom", "Prénom", "Date de naissance", "Photo"
 And le tableau contient 4 lignes avec 4 colonnes dans l'ordre suivant :
-  | firstname | lastname | birthdate  | entity    |
-  | Samuel    | Gomez    | 20/10/1983 | BIOSPAN   |
-  | John      | Doe      | 20/10/1978 | PEARLESSA |
-  | Guillaume | Chervet  | 20/10/1985 | CIRCUM    |
-  | Sophie    | Danneels | 20/10/1992 | TRIPSCH   |  
+  | firstname | lastname | birthdate  | photo                                        |
+  | Samuel    | Gomez    | 20/10/1983 | https://randomuser.me/portraits/men/34.jpg   |
+  | John      | Doe      | 20/10/1978 | https://randomuser.me/portraits/men/34.jpg   |
+  | Guillaume | Chervet  | 20/10/1985 | https://randomuser.me/portraits/men/34.jpg   |
+  | Sophie    | Danneels | 20/10/1992 | https://randomuser.me/portraits/women/85.jpg |    
       `,
     ],
     testPeople: [
@@ -247,7 +247,7 @@ import { computeInfos, usePeople } from '../People';`,
     firstname: 'Samuel',
     lastname: 'Gomez',
     birthDate: '1985-10-20T13:44:20.540000',
-    entity: 'AXA',
+    photo: 'maphoto.jpg',
   },
 ];`,
       `const expectedData = [
@@ -262,8 +262,8 @@ import { computeInfos, usePeople } from '../People';`,
       lastname: {
         label: 'Gomez',
       },
-      entity: {
-        label: 'AXA',
+      photo: {
+        label: 'maphoto.jpg',
       },
     },
     key: '99999',

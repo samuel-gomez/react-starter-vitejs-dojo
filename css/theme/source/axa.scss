@@ -37,13 +37,13 @@ $linkColor: $AxaRedcolor;
 $linkColorHover: lighten($linkColor, 15%);
 $selectionBackgroundColor: lighten($linkColor, 25%);
 
-$heading1Size: 2.5em;
-$heading2Size: 1.6em;
-$heading3Size: 1.3em;
-$heading4Size: 1em;
+$heading1Size: clamp(1.6em, 5vw, 2.5em);
+$heading2Size: clamp(1em, 5vw, 1.6em);
+$heading3Size: clamp(0.8em, 5vw, 1.3em);
+$heading4Size: clamp(0.5em, 5vw, 1em);
 
 // Change text colors against dark slide backgrounds
-@include dark-bg-text-color(#3032c1);
+@include dark-bg-text-color(white);
 
 // Theme template ------------------------------
 @import "../template/theme";
@@ -58,77 +58,101 @@ $heading4Size: 1em;
   --r-axa-blue-color: #{$AxaBluecolor};
 }
 
-.reveal h1::before {
-  content: "";
-  width: 50px;
-  height: 119px;
-  transform: skewX(-30deg);
-  background: #ff1721;
-  position: absolute;
-  z-index: -1;
-}
-
-.reveal h2::before {
-  content: "";
-  width: 30px;
-  height: 69px;
-  transform: skewX(-30deg);
-  background: #ff1721;
-  position: absolute;
-  z-index: -1;
-}
-
-.reveal h2 {
-  color: var(--r-heading-color);
-  text-shadow: var(--r-heading2-text-shadow);
-}
-
-.reveal h3 {
-  text-shadow: none;
-}
-
-.reveal .code-wrapper {
-  display: flex;
-  place-content: center;
-  code {
-    padding: 1rem;
-    border-radius: 8px;
-    box-shadow: 0 15px 15px 0 rgba(0, 0, 0, 0.5);
-    border: var(--r-heading2-color) solid 1px;
-    font-size: 1rem;
-    line-height: 1.5rem;
+.reveal {
+  h1::before {
+    content: "";
+    width: clamp(36px, 4vw, 50px);
+    height: clamp(78px, 6vw, 100px);
+    transform: skewX(-30deg);
+    background: #ff1721;
+    position: absolute;
+    z-index: -1;
   }
-  &--notes {
-    left: -13%;
-    code {
-      max-width: 60%;
+  h2 {
+    color: var(--r-heading-color);
+    text-shadow: var(--r-heading2-text-shadow);
+    &::before {
+      content: "";
+      width: 30px;
+      height: 69px;
+      transform: skewX(-30deg);
+      background: #ff1721;
+      position: absolute;
+      z-index: -1;
     }
   }
-}
-.reveal pre[data-auto-animate-target] {
-  overflow: inherit;
-}
+  h3 {
+    text-shadow: none;
+  }
+  .code-wrapper {
+    display: flex;
+    place-content: center;
+    align-items: flex-start;
+    gap: 1rem;
+    code {
+      padding: 1rem;
+      border-radius: 8px;
+      box-shadow: 0 15px 15px 0 rgba(0, 0, 0, 0.5);
+      border: var(--r-heading2-color) solid 1px;
+      font-size: 1rem;
+      line-height: 1.5rem;
+      position: relative;
+    }
+    .sg-code-input {
+      display: none;
+    }
 
-.reveal .hljs:not(:first-child).fragment {
-  width: auto;
-  left: 50%;
-  transform: translate(-50%, 0);
-}
-
-.reveal a {
-  text-decoration: underline;
-}
-.reveal pre {
-  box-shadow: inherit;
-}
-
-.reveal span.file {
-  font-size: 2rem;
-}
-
-.reveal .flex-column-center {
-  display: flex;
-  flex-direction: column;
-  place-content: center;
-  place-items: center;
+    &--notes {
+      left: -13%;
+    }
+  }
+  pre {
+    box-shadow: inherit;
+  }
+  pre[data-auto-animate-target] {
+    overflow: inherit;
+    code {
+      height: inherit;
+    }
+  }
+  .hljs {
+    min-height: inherit;
+  }
+  .hljs:not(:first-child).fragment {
+    width: auto;
+    left: 50%;
+    transform: translate(-50%, 0);
+  }
+  a {
+    text-decoration: underline;
+  }
+  span.file {
+    font-size: 2rem;
+  }
+  .flex-column-center {
+    display: flex;
+    flex-direction: column;
+    place-content: center;
+    place-items: center;
+  }
+  ul {
+    padding: 1rem;
+    font-size: 1.8rem;
+    line-height: 1.5;
+    font-size: clamp(0.1em, 5vw, 0.7em);
+    line-height: 1.2;
+    li {
+      font-weight: 200;
+      color: white;
+      &::marker {
+        color: var(--r-link-color);
+      }
+      &:not(:last-child) {
+        margin-bottom: 1px;
+      }
+    }
+  }
+  p {
+    font-size: clamp(0.5em, 5vw, 1em);
+  }
 }

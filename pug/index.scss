@@ -48,7 +48,9 @@ $color-info-light: #def5ff;
 @import "./components/alert/alert.scss";
 @import "./components/tree/tree.scss";
 @import "./components/note/note.scss";
+@import "./components/copy/copy.scss";
 
 /* Slides */
 @import "./slides/getstarted/getstarted.scss";
-@import "./slides/exo1/exo1.scss";
+@import "./slides/playground/playground.scss";
+@import "./slides/exo2/exo2.scss";

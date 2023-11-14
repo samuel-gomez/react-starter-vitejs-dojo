@@ -37,13 +37,15 @@ $name: "card";
   /* children ***********************************/
   .#{$prefix}-#{$name}__title {
     color: var(--sg-title-card-color);
-    font-size: 2rem;
+    font-size: clamp(0.6rem, 5vw, 2rem);
+    line-height: 1;
     margin: 0;
     font-weight: 900;
     grid-area: title;
   }
   .#{$prefix}-#{$name}__content {
-    font-size: 2rem;
+    font-size: clamp(0.6rem, 5vw, 2rem);
+    line-height: 1;
     margin: 0;
     font-weight: 300;
     grid-area: content;
@@ -107,6 +109,17 @@ $name: "card";
       &-icon {
         width: 30px;
       }
+    }
+  }
+}
+
+@media screen and (max-width: 500px) {
+  .#{$prefix}-#{$name}s-3cols {
+    grid-template-columns: 1fr;
+    gap: 0.5rem;
+    .sg-card .sg-card__image {
+      width: 36px;
+      margin: auto 0;
     }
   }
 }
