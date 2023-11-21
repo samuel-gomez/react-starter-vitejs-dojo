@@ -64,7 +64,7 @@
                   +Code({ dataLineNumbers: false, content : 'npm t People.spec.tsx'})   
             span.file Récupérez le code généré dans le terminal
             br
-            span.file #{rootPagePeople}__tests__/People.spec.tsx
+            span.file #{rootPagePeople}__tests__/People.spec.tsx 
             pre(data-id="code-animation")               
                   +Code({ content :files.testPeople[1], dataLineNumbers: "3-5"}) 
       +Section({ name :'exo1-cucumber-3', autoAnimate: true })           
@@ -75,7 +75,7 @@
                   +Code({ content :files.testPeople[2], dataLineNumbers: "2,5-12"})                       
       +Section({ name :'exo1-cucumber-4', autoAnimate: true })           
             h2 Modifier le scénario 
-            span.file #{rootFeature}People/People.feature
+            span.file #{rootFeature}People/People.feature 
             pre.code-wrapper--notes(data-id="code-animation")  
                   +Notes({ notes: notes.featurePeople })
                   +Code({ content :files.featurePeople[1], dataLineNumbers: "2-7,10-17" , language: 'gherkin'})                       
@@ -85,10 +85,10 @@
                   +Code({ dataLineNumbers: false, content : 'npm t People.spec.tsx'}) 
             span.file #{rootPagePeople}__tests__/People.spec.tsx
             pre(data-id="code-animation") 
-                  +Code({ content :files.testPeople[3], dataLineNumbers: "5, 11-13" })     
+                  +Code({ content :files.testPeople[3], dataLineNumbers: "2,6, 12-14" })     
       +Section({ name :'exo1-cucumber-6', autoAnimate: true })           
             h2 Utiliser les scénarios type
-            span.file #{rootFeature}People/People.feature
+            span.file #{rootFeature}People/People.spec.tsx
             pre.code-wrapper--notes(data-id="code-animation")  
                   +Notes({ notes: notes.testPeople3 })
                   +Code({ content :files.testPeople[4], dataLineNumbers: "2-4, 6-16" }) 
@@ -100,11 +100,17 @@
                   +Code({ content : files.constants[1],  dataLineNumbers: "4, 5,7-12"  })  
       +Section({ name :'exo1-donnees-typage', autoAnimate: true })            
             h2 Typer les données
-            span.file #{rootPagePeople}People.tsx : type
+            span.file #{rootPagePeople}People.tsx : typage
             pre(data-id="code-animation")  
-                  +Code({ content : files.people[6] })  
+                  +Code({ content : files.people[6] })
       +Section({ name :'exo1-cucumber-8', autoAnimate: true })           
-            h2 Récupération des données
+            h2 Définir l'url d'API
+            span.file Ajouter l'url d'API dans le fichier /public/environment.development.json
+            pre.code-wrapper--notes(data-id="code-animation")
+                  +Notes({ notes: notes.apiEnv[0] })
+                  +Code({ content: files.apiEnv,  dataLineNumbers: "4"})
+      +Section({ name :'exo1-cucumber-8', autoAnimate: true })           
+            h2 Récupération des données            
             span.file #{rootPagePeople}People.tsx : 
                   em usePeople
             .r-stack
@@ -113,18 +119,18 @@
                         +Code({ content : files.people[2],  dataLineNumbers: "1"  })                         
                   pre.code-wrapper--notes.fragment.fade-in-then-out  
                         +Notes({ notes: notes.usePeople[1], fragment: false })
-                        +Code({ content : files.people[2],  dataLineNumbers: "2"  })
+                        +Code({ content : files.people[2],  dataLineNumbers: "2-3"  })
                   pre.fragment.fade-in-then-out 
                         +Notes({ notes: notes.usePeople[2], fragment: false })
-                        +Code({ content : files.people[2],  dataLineNumbers: "3-5"  })
+                        +Code({ content : files.people[2],  dataLineNumbers: "4-6"  }) 
                         +Notes({ notes: notes.usePeople[3], fragment: false, modifier: 'right' })
                   pre.fragment.fade-in-then-out 
                         +Notes({ notes: notes.usePeople[4], fragment: false })
-                        +Code({ content : files.people[2],  dataLineNumbers: "4,5"  })
+                        +Code({ content : files.people[2],  dataLineNumbers: "5,6"  })
                         +Notes({ notes: notes.usePeople[5], fragment: false, modifier: 'right' })
-                  pre.code-wrapper--notes.fragment.fade-in-then-out  
+                  pre.code-wrapper--notes.fragment.fade-in-then-out 
                         +Notes({ notes: notes.usePeople[6], fragment: false })
-                        +Code({ content : files.people[2],  dataLineNumbers: "9-14"  })
+                        +Code({ content : files.people[2],  dataLineNumbers: "10-15"  })
       +Section({ name :'exo1-cucumber-9'})           
             h2 Formatage des données 
             span.file #{rootPagePeople}People.tsx : 
@@ -141,7 +147,12 @@
                         +Code({ content : files.people[3],  dataLineNumbers: "3-9"  })
                   pre.code-wrapper--notes.fragment.fade-in-then-out  
                         +Notes({ notes: notes.computeInfos[3], fragment: false })
-                        +Code({ content : files.people[3],  dataLineNumbers: "5-8"  }) 
+                        +Code({ content : files.people[3],  dataLineNumbers: "5-8"  })
+            +Alert({ modifier: 'success'})
+                  strong Injecter du JSX : 
+                  | il n'est pas obligatoire d'utiliser la méthode setDisplay, on peut directement le contenu texte ou injecter un composant React.
+            pre
+                  +Code({ content : files.people[7],  dataLineNumbers: "4"  })
       +Section({ name :'exo1-cucumber-10'})           
             h2 Passage des données à la vue
             span.file #{rootPagePeople}People.tsx : PeopleContainer 
@@ -177,17 +188,16 @@
                   pre.code-wrapper--notes.fragment.fade-in-then-out  
                         +Notes({ notes: notes.people[4], fragment: false })
                         +Code({ content : files.people[5],  dataLineNumbers: "12"  })
-      +Section({ name :'exo1-coverage', autoAnimate: true })            
+      +Section({ name :'exo1-coverage', autoAnimate: true })             
             h2 Couverture de test
             span.file Lancer la commande suivante :
             pre                  
                   +Code({ dataLineNumbers: false, content : 'npm run cover'})
             div.flex-column-center
-                  span.file La couverture n'est pas complète :
-                  +Img({ img: 'coverage.png'})  
+                  span.file Pour compléter nos tests, nous allons ajouter un peu de Tests Unitaires
       +Section({ name :'exo1-unit-test', autoAnimate: true })            
             h2 Ajout de tests unitaires
-            span.file #{rootPagePeople}__tests__/People.test.tsx
+            span.file #{rootPagePeople}__tests__/People.test.tsx 
             .r-stack
                   pre.fragment.fade-in-then-out                        
                         +Notes({ notes: notes.unitTestPeople[0], fragment: false })
@@ -214,4 +224,8 @@
                         +Code({ content : files.unitTestPeople[5] ,  dataLineNumbers: "9"  })  
                   pre.fragment.fade-in-then-out  
                         +Code({ content : files.unitTestPeople[5]  })
+      +Section({ name :'exo1-solution', autoAnimate: true })            
+            h2 Solution
+            span.file Dispo sur la branche dojo-exo1 sur 
+                  a(href="https://github.com/samuel-gomez/react-starter-vitejs/tree/feature/dojo-exo1") Github
       

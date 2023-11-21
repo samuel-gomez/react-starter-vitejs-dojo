@@ -409,6 +409,9 @@ section.has-dark-background, section.has-dark-background h1, section.has-dark-ba
 .reveal .code-wrapper--notes {
   left: -13%;
 }
+.reveal .r-stack > pre {
+  margin-block: 2rem;
+}
 .reveal pre {
   box-shadow: inherit;
 }

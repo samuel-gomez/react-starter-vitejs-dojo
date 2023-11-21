@@ -36,8 +36,8 @@ class Copy {
         e.preventDefault();
         const button = e.target;
         button.classList.add(`${prefix}-copy--copied`);
-        const wrapper = e.currentTarget.closest(`.code-wrapper`);
-        const input = $(`${prefix}-code-input`, wrapper);
+        const wrapper = e.currentTarget.closest(`.${prefix}-wrapper-copy`);
+        const input = wrapper.nextElementSibling;
         navigator.clipboard.writeText(input.value);
         button.textContent = "Copied !";
         setTimeout(() => {

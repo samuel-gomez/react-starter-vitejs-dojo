@@ -8,8 +8,8 @@ $name: "copy";
 
 .#{$prefix}-#{$name} {
   position: absolute;
-  bottom: 0;
-  left: 50%;
+  top: -20px;
+  right: 0;
   translate: -50% 50%;
   border-radius: var(--sg-border-radius);
   font-size: 0.8rem;

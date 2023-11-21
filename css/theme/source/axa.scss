@@ -106,6 +106,9 @@ $heading4Size: clamp(0.5em, 5vw, 1em);
       left: -13%;
     }
   }
+  .r-stack > pre {
+    margin-block: 2rem;
+  }
   pre {
     box-shadow: inherit;
   }

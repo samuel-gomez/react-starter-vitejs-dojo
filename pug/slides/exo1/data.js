@@ -40,7 +40,8 @@ const People = ({ titleBar = TITLE_BAR, title = TITLE }: TPeople) => (
 
 export default People;`,
       `export const usePeople = () => {
-  const { data, isFetching, error, refetch } = useQuery([ENDPOINT], {
+  const { data, isFetching, error, refetch } = useQuery({
+    queryKey: [ENDPOINT],
     select: ({ responseBody }: TPeopleDataResponse) => ({
       anomaly: setAnomalyEmptyItems(responseBody),
       [SERVICE_NAME]: computeInfos(responseBody),
@@ -54,6 +55,7 @@ export default People;`,
     refetch,
   };
 };
+
 export type TReturnUsePeople = ReturnType<typeof usePeople>;`,
       `export const computeInfos = (data: TPeopleData[]) =>
 data?.map(({ _id, firstname, lastname, birthDate, entity }) => ({
@@ -73,7 +75,7 @@ data?.map(({ _id, firstname, lastname, birthDate, entity }) => ({
 export default PeopleContainer;`,
       `export type TPeople = TLayoutPage &
   Pick<TReturnUsePeople, 'people' | 'anomaly' | 'refetch'> & {
-    loaderMode: TLoaderContainer['mode'];
+    loaderMode: TLoader['mode'];
     headers?: typeof TABLE_HEADERS_PEOPLE;
   };
 
@@ -92,6 +94,11 @@ const People = ({ titleBar = TITLE_BAR, title = TITLE, people, headers = TABLE_H
 export type TPeopleDataResponse = {
   responseBody: TPeopleData[];
 };`,
+      `...
+  cols: {
+    ...
+    entity: { children: <Badge classModifier="info">{entity}</Badge> },
+  },`,
     ],
     constantsRoute: [
       `import { ROUTE_URL_UNAUTHORIZE as UNAUTHORIZE } from 'pages/Unauthorize/constants';
@@ -161,7 +168,7 @@ And la page reçoit les données suivantes
 When J'accède à la page People
 Then un titre "Tableau des gens" est visible
 And la page contient un tableau répertoriant la liste des gens
-And le tableau présente des entêtes de colonnes dans l’ordre suivant : "Nom", "Prénom", "Date de naissance", "Entité"
+And le tableau présente des entêtes de colonnes dans l’ordre suivant : "Prénom", "Nom", "Date de naissance", "Entité"
 And le tableau contient 4 lignes avec 4 colonnes dans l'ordre suivant :
   | firstname | lastname | birthdate  | entity    |
   | Samuel    | Gomez    | 20/10/1983 | BIOSPAN   |
@@ -178,8 +185,6 @@ import { JeSuisUnUtilisateurConnuEtConnecteAvecleProfil, UnTitreEstVisible }
 import People from '..';      
 const feature = loadFeature('features/People/People.feature');      
 configure({ defaultHidden: true });
-
-const feature = loadFeature('features/People/People.feature');
 
 defineFeature(feature, test => {
   test('Affichage de la page People', ({ given, and, when, then }) => {});
@@ -222,8 +227,9 @@ defineFeature(feature, test => {
   and(/^le tableau contient (\\d+) lignes avec (\\d+) colonnes dans l'ordre suivant :$/, (arg0, arg1, table) => {});
 });`,
       `...
+  const tableAriaLabel = 'Tableau des gens';
   and('la page reçoit les données suivantes', responseBody => {
-    serverUseGet<TPeopleData[]>({ route: 'people', responseBody });
+    serverUseGet<TPeopleData[]>({ route: 'people', responseBody }); // le typage serait juste après
   });
   ...
   LaPageContientUnTableau(and, 'la page contient un tableau répertoriant la liste des gens', tableAriaLabel);
@@ -234,7 +240,7 @@ defineFeature(feature, test => {
   );
   LeTableauContientLesLignesCorrespondantAuxDonneesRecues(
     and,
-    /^le tableau contient (\d+) lignes avec (\d+) colonnes dans l'ordre suivant :$/,
+    /^le tableau contient (\\d+) lignes avec (\\d+) colonnes dans l'ordre suivant :$/,
     tableAriaLabel,
   );`,
     ],
@@ -306,6 +312,14 @@ import { computeInfos, usePeople } from '../People';`,
     },
   );
 });`,
+    ],
+    apiEnv: [
+      `...
+{
+  "apiUrl": {
+    "base": "https://react-starter-api.vercel.app/api/"
+  },
+  "baseUrl": "",`,
     ],
   },
   notes: {
@@ -437,7 +451,7 @@ import { computeInfos, usePeople } from '../People';`,
     ],
     testPeople3: [
       {
-        line: 2,
+        line: 3,
         content:
           "La méthode <i>serverUseGet</i> permet de passer les données provenant du gherkin comme réponse renvoyée sur un endpoint d'API (cf fichier msw.ts)",
       },
@@ -464,7 +478,7 @@ import { computeInfos, usePeople } from '../People';`,
       ],
       [
         {
-          line: 2,
+          line: 3,
           content:
             "En second paramètre, sur la propriété select, on peut passer une fonction qui s'exécutera après avoir reçu les données pour effectuer des traitements",
         },
@@ -478,21 +492,21 @@ import { computeInfos, usePeople } from '../People';`,
       ],
       [
         {
-          line: 3,
+          line: 5,
           content:
             "<i>setAnomalyEmptyItems</i> est une fonction utilitaire qui va renvoyer un objet dans l'anomalie qui affichera une alert",
         },
       ],
       [
         {
-          line: 4,
+          line: 6,
           content:
             "<i>computeInfos</i> est une fonction que l'on va créer pour respecter le format de données attendu par le tableau",
         },
       ],
       [
         {
-          line: 9,
+          line: 12,
           content: "Enfin, on retourne les valeurs utiles à la vue",
         },
       ],
@@ -628,6 +642,15 @@ import { computeInfos, usePeople } from '../People';`,
           line: 9,
           content:
             "On rend notre hook en passant le mock que doit renvoyer React Query",
+        },
+      ],
+    ],
+    apiEnv: [
+      [
+        {
+          line: 4,
+          content:
+            "apiUrl est sous forme d'objet pour permettre d'avoir plusieurs sources d'API",
         },
       ],
     ],
