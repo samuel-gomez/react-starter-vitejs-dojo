@@ -40,7 +40,7 @@ const People = ({ titleBar = TITLE_BAR, title = TITLE }: TPeople) => (
 
 export default People;`,
       `export const usePeople = () => {
-  const { data, isFetching, error, refetch } = useQuery({
+  const { data, isLoading, error, refetch } = useQuery({
     queryKey: [ENDPOINT],
     select: ({ responseBody }: TPeopleDataResponse) => ({
       anomaly: setAnomalyEmptyItems(responseBody),
@@ -51,7 +51,7 @@ export default People;`,
   return {
     ...data,
     anomaly: (error || data?.anomaly) as Tanomaly | null,
-    isLoading: isFetching,
+    isLoading,
     refetch,
   };
 };
@@ -94,11 +94,12 @@ const People = ({ titleBar = TITLE_BAR, title = TITLE, people, headers = TABLE_H
 export type TPeopleDataResponse = {
   responseBody: TPeopleData[];
 };`,
-      `...
-  cols: {
+      `cols: {
     ...
-    entity: { children: <Badge classModifier="info">{entity}</Badge> },
-  },`,
+    entity: {
+      classModifier: 'actions',
+      children: <Badge classModifier="info">{entity}</Badge>
+    },`,
     ],
     constantsRoute: [
       `import { ROUTE_URL_UNAUTHORIZE as UNAUTHORIZE } from 'pages/Unauthorize/constants';
@@ -229,7 +230,7 @@ defineFeature(feature, test => {
       `...
   const tableAriaLabel = 'Tableau des gens';
   and('la page reçoit les données suivantes', responseBody => {
-    serverUseGet<TPeopleData[]>({ route: 'people', responseBody }); // le typage serait juste après
+    serverUseGet<TPeopleData[]>({ route: 'people', responseBody }); // le typage sera fait juste après
   });
   ...
   LaPageContientUnTableau(and, 'la page contient un tableau répertoriant la liste des gens', tableAriaLabel);

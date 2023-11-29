@@ -957,7 +957,7 @@ And le tableau contient 4 lignes avec 4 colonnes dans l'ordre suivant :
               </div><code class="language-javascript sg-code js-code" data-trim="data-trim" data-line-numbers="2-4, 6-16" data-ln-start-from="">...
   const tableAriaLabel = 'Tableau des gens';
   and('la page reçoit les données suivantes', responseBody =&gt; {
-    serverUseGet&lt;TPeopleData[]&gt;({ route: 'people', responseBody }); // le typage serait juste après
+    serverUseGet&lt;TPeopleData[]&gt;({ route: 'people', responseBody }); // le typage sera fait juste après
   });
   ...
   LaPageContientUnTableau(and, 'la page contient un tableau répertoriant la liste des gens', tableAriaLabel);
@@ -974,7 +974,7 @@ And le tableau contient 4 lignes avec 4 colonnes dans l'ordre suivant :
               <textarea class="sg-code-input">...
   const tableAriaLabel = 'Tableau des gens';
   and('la page reçoit les données suivantes', responseBody =&gt; {
-    serverUseGet&lt;TPeopleData[]&gt;({ route: 'people', responseBody }); // le typage serait juste après
+    serverUseGet&lt;TPeopleData[]&gt;({ route: 'people', responseBody }); // le typage sera fait juste après
   });
   ...
   LaPageContientUnTableau(and, 'la page contient un tableau répertoriant la liste des gens', tableAriaLabel);
@@ -1034,7 +1034,7 @@ export type TPeopleDataResponse = {
   responseBody: TPeopleData[];
 };</textarea></pre>
           </section>
-          <section class="sg-exo1-cucumber-8" id="exo1-cucumber-8" data-background="" data-background-transition="fade" data-auto-animate="data-auto-animate">          
+          <section class="sg-exo1-api-url" id="exo1-api-url" data-background="" data-background-transition="fade" data-auto-animate="data-auto-animate">          
             <h2>Définir l'url d'API</h2><span class="file">Ajouter l'url d'API dans le fichier /public/environment.development.json</span>
             <pre class="code-wrapper--notes" data-id="code-animation">
               <div class="sg-notes">
@@ -1054,12 +1054,17 @@ export type TPeopleDataResponse = {
           </section>
           <section class="sg-exo1-cucumber-8" id="exo1-cucumber-8" data-background="" data-background-transition="fade" data-auto-animate="data-auto-animate">          
             <h2>Récupération des données            </h2><span class="file">src/page/People/People.tsx : <em>usePeople</em></span>
+            <div class="sg-alert  sg-alert--success" role="alert">
+              <svg class="sg-svg" id="info-icon" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path fill-rule="evenodd" d="M22 12a10 10 0 1 1-20 0 10 10 0 0 1 20 0Zm-10 5.75c.41 0 .75-.34.75-.75v-6a.75.75 0 0 0-1.5 0v6c0 .41.34.75.75.75ZM12 7a1 1 0 1 1 0 2 1 1 0 0 1 0-2Z" clip-rule="evenodd"></path>
+              </svg><span class="sg-alert__content"><strong>Remarque : </strong>useQuery retourne <strong>isLoading </strong>pour l'état de chargement du cache ou <strong>isFecthing </strong>pour l'état du fetch.<br>Par défaut, React Query affiche les données du cache et effectue en parallèle un appel fetch pour rafraichir les données.<br>Si on souhaite afficher le loader tant que le fetch n'est pas terminé, il faut utiliser isFetching<br>On peut également limiter le rafraichissement des données avec l'option <strong>staleTime </strong></span>
+            </div>
             <div class="r-stack">
               <pre class="code-wrapper--notes fragment fade-in-then-out"> 
                 <div class="sg-notes">
                   <div class="sg-note" style="top: 10px"><span class="sg-note__content">On créé un hook custom pour effectuer l'appel avec React Query</span></div>
                 </div><code class="language-javascript sg-code js-code" data-trim="data-trim" data-line-numbers="1" data-ln-start-from="">export const usePeople = () =&gt; {
-  const { data, isFetching, error, refetch } = useQuery({
+  const { data, isLoading, error, refetch } = useQuery({
     queryKey: [ENDPOINT],
     select: ({ responseBody }: TPeopleDataResponse) =&gt; ({
       anomaly: setAnomalyEmptyItems(responseBody),
@@ -1070,14 +1075,14 @@ export type TPeopleDataResponse = {
   return {
     ...data,
     anomaly: (error || data?.anomaly) as Tanomaly | null,
-    isLoading: isFetching,
+    isLoading,
     refetch,
   };
 };
 
 export type TReturnUsePeople = ReturnType&lt;typeof usePeople&gt;;</code>
                 <textarea class="sg-code-input">export const usePeople = () =&gt; {
-  const { data, isFetching, error, refetch } = useQuery({
+  const { data, isLoading, error, refetch } = useQuery({
     queryKey: [ENDPOINT],
     select: ({ responseBody }: TPeopleDataResponse) =&gt; ({
       anomaly: setAnomalyEmptyItems(responseBody),
@@ -1088,7 +1093,7 @@ export type TReturnUsePeople = ReturnType&lt;typeof usePeople&gt;;</code>
   return {
     ...data,
     anomaly: (error || data?.anomaly) as Tanomaly | null,
-    isLoading: isFetching,
+    isLoading,
     refetch,
   };
 };
@@ -1098,7 +1103,7 @@ export type TReturnUsePeople = ReturnType&lt;typeof usePeople&gt;;</textarea></p
                 <div class="sg-notes">
                   <div class="sg-note" style="top: 33.5px"><span class="sg-note__content">On passe la route au useQuery, il nous retourne les données, l'état du fetch, l'état de l'erreur, et une méthode refetch</span></div>
                 </div><code class="language-javascript sg-code js-code" data-trim="data-trim" data-line-numbers="2-3" data-ln-start-from="">export const usePeople = () =&gt; {
-  const { data, isFetching, error, refetch } = useQuery({
+  const { data, isLoading, error, refetch } = useQuery({
     queryKey: [ENDPOINT],
     select: ({ responseBody }: TPeopleDataResponse) =&gt; ({
       anomaly: setAnomalyEmptyItems(responseBody),
@@ -1109,14 +1114,14 @@ export type TReturnUsePeople = ReturnType&lt;typeof usePeople&gt;;</textarea></p
   return {
     ...data,
     anomaly: (error || data?.anomaly) as Tanomaly | null,
-    isLoading: isFetching,
+    isLoading,
     refetch,
   };
 };
 
 export type TReturnUsePeople = ReturnType&lt;typeof usePeople&gt;;</code>
                 <textarea class="sg-code-input">export const usePeople = () =&gt; {
-  const { data, isFetching, error, refetch } = useQuery({
+  const { data, isLoading, error, refetch } = useQuery({
     queryKey: [ENDPOINT],
     select: ({ responseBody }: TPeopleDataResponse) =&gt; ({
       anomaly: setAnomalyEmptyItems(responseBody),
@@ -1127,7 +1132,7 @@ export type TReturnUsePeople = ReturnType&lt;typeof usePeople&gt;;</code>
   return {
     ...data,
     anomaly: (error || data?.anomaly) as Tanomaly | null,
-    isLoading: isFetching,
+    isLoading,
     refetch,
   };
 };
@@ -1137,7 +1142,7 @@ export type TReturnUsePeople = ReturnType&lt;typeof usePeople&gt;;</textarea></p
                 <div class="sg-notes">
                   <div class="sg-note" style="top: 57px"><span class="sg-note__content">En second paramètre, sur la propriété select, on peut passer une fonction qui s'exécutera après avoir reçu les données pour effectuer des traitements</span></div>
                 </div><code class="language-javascript sg-code js-code" data-trim="data-trim" data-line-numbers="4-6" data-ln-start-from="">export const usePeople = () =&gt; {
-  const { data, isFetching, error, refetch } = useQuery({
+  const { data, isLoading, error, refetch } = useQuery({
     queryKey: [ENDPOINT],
     select: ({ responseBody }: TPeopleDataResponse) =&gt; ({
       anomaly: setAnomalyEmptyItems(responseBody),
@@ -1148,14 +1153,14 @@ export type TReturnUsePeople = ReturnType&lt;typeof usePeople&gt;;</textarea></p
   return {
     ...data,
     anomaly: (error || data?.anomaly) as Tanomaly | null,
-    isLoading: isFetching,
+    isLoading,
     refetch,
   };
 };
 
 export type TReturnUsePeople = ReturnType&lt;typeof usePeople&gt;;</code>
                 <textarea class="sg-code-input">export const usePeople = () =&gt; {
-  const { data, isFetching, error, refetch } = useQuery({
+  const { data, isLoading, error, refetch } = useQuery({
     queryKey: [ENDPOINT],
     select: ({ responseBody }: TPeopleDataResponse) =&gt; ({
       anomaly: setAnomalyEmptyItems(responseBody),
@@ -1166,7 +1171,7 @@ export type TReturnUsePeople = ReturnType&lt;typeof usePeople&gt;;</code>
   return {
     ...data,
     anomaly: (error || data?.anomaly) as Tanomaly | null,
-    isLoading: isFetching,
+    isLoading,
     refetch,
   };
 };
@@ -1179,7 +1184,7 @@ export type TReturnUsePeople = ReturnType&lt;typeof usePeople&gt;;</textarea>
                 <div class="sg-notes">
                   <div class="sg-note" style="top: 104px"><span class="sg-note__content"><i>setAnomalyEmptyItems</i> est une fonction utilitaire qui va renvoyer un objet dans l'anomalie qui affichera une alert</span></div>
                 </div><code class="language-javascript sg-code js-code" data-trim="data-trim" data-line-numbers="5,6" data-ln-start-from="">export const usePeople = () =&gt; {
-  const { data, isFetching, error, refetch } = useQuery({
+  const { data, isLoading, error, refetch } = useQuery({
     queryKey: [ENDPOINT],
     select: ({ responseBody }: TPeopleDataResponse) =&gt; ({
       anomaly: setAnomalyEmptyItems(responseBody),
@@ -1190,14 +1195,14 @@ export type TReturnUsePeople = ReturnType&lt;typeof usePeople&gt;;</textarea>
   return {
     ...data,
     anomaly: (error || data?.anomaly) as Tanomaly | null,
-    isLoading: isFetching,
+    isLoading,
     refetch,
   };
 };
 
 export type TReturnUsePeople = ReturnType&lt;typeof usePeople&gt;;</code>
                 <textarea class="sg-code-input">export const usePeople = () =&gt; {
-  const { data, isFetching, error, refetch } = useQuery({
+  const { data, isLoading, error, refetch } = useQuery({
     queryKey: [ENDPOINT],
     select: ({ responseBody }: TPeopleDataResponse) =&gt; ({
       anomaly: setAnomalyEmptyItems(responseBody),
@@ -1208,7 +1213,7 @@ export type TReturnUsePeople = ReturnType&lt;typeof usePeople&gt;;</code>
   return {
     ...data,
     anomaly: (error || data?.anomaly) as Tanomaly | null,
-    isLoading: isFetching,
+    isLoading,
     refetch,
   };
 };
@@ -1221,7 +1226,7 @@ export type TReturnUsePeople = ReturnType&lt;typeof usePeople&gt;;</textarea>
                 <div class="sg-notes">
                   <div class="sg-note" style="top: 268.5px"><span class="sg-note__content">Enfin, on retourne les valeurs utiles à la vue</span></div>
                 </div><code class="language-javascript sg-code js-code" data-trim="data-trim" data-line-numbers="10-15" data-ln-start-from="">export const usePeople = () =&gt; {
-  const { data, isFetching, error, refetch } = useQuery({
+  const { data, isLoading, error, refetch } = useQuery({
     queryKey: [ENDPOINT],
     select: ({ responseBody }: TPeopleDataResponse) =&gt; ({
       anomaly: setAnomalyEmptyItems(responseBody),
@@ -1232,14 +1237,14 @@ export type TReturnUsePeople = ReturnType&lt;typeof usePeople&gt;;</textarea>
   return {
     ...data,
     anomaly: (error || data?.anomaly) as Tanomaly | null,
-    isLoading: isFetching,
+    isLoading,
     refetch,
   };
 };
 
 export type TReturnUsePeople = ReturnType&lt;typeof usePeople&gt;;</code>
                 <textarea class="sg-code-input">export const usePeople = () =&gt; {
-  const { data, isFetching, error, refetch } = useQuery({
+  const { data, isLoading, error, refetch } = useQuery({
     queryKey: [ENDPOINT],
     select: ({ responseBody }: TPeopleDataResponse) =&gt; ({
       anomaly: setAnomalyEmptyItems(responseBody),
@@ -1250,7 +1255,7 @@ export type TReturnUsePeople = ReturnType&lt;typeof usePeople&gt;;</code>
   return {
     ...data,
     anomaly: (error || data?.anomaly) as Tanomaly | null,
-    isLoading: isFetching,
+    isLoading,
     refetch,
   };
 };
@@ -1259,7 +1264,7 @@ export type TReturnUsePeople = ReturnType&lt;typeof usePeople&gt;;</textarea></p
             </div>
           </section>
           <section class="sg-exo1-cucumber-9" id="exo1-cucumber-9" data-background="" data-background-transition="fade">          
-            <h2>Formatage des données </h2><span class="file">src/page/People/People.tsx : <em>computeInfos </em></span>
+            <h2>Formatage des données </h2><span class="file">src/page/People/People.tsx : <em>computeInfos            </em></span>
             <div class="r-stack">
               <pre class="code-wrapper--notes fragment fade-in-then-out"> 
                 <div class="sg-notes">
@@ -1357,18 +1362,20 @@ data?.map(({ _id, firstname, lastname, birthDate, entity }) =&gt; ({
             <div class="sg-alert  sg-alert--success" role="alert">
               <svg class="sg-svg" id="info-icon" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                 <path fill-rule="evenodd" d="M22 12a10 10 0 1 1-20 0 10 10 0 0 1 20 0Zm-10 5.75c.41 0 .75-.34.75-.75v-6a.75.75 0 0 0-1.5 0v6c0 .41.34.75.75.75ZM12 7a1 1 0 1 1 0 2 1 1 0 0 1 0-2Z" clip-rule="evenodd"></path>
-              </svg><span class="sg-alert__content"><strong>Injecter du JSX : </strong>il n'est pas obligatoire d'utiliser la méthode setDisplay, on peut directement le contenu texte ou injecter un composant React.</span>
+              </svg><span class="sg-alert__content"><strong>Injecter du JSX : </strong>il n'est pas obligatoire d'utiliser la méthode setDisplay, on peut directement mettre du contenu texte ou injecter un composant React.</span>
             </div>
-            <pre><code class="language-javascript sg-code js-code" data-trim="data-trim" data-line-numbers="4" data-ln-start-from="">...
-  cols: {
+            <pre><code class="language-javascript sg-code js-code" data-trim="data-trim" data-line-numbers="4-5" data-ln-start-from="">cols: {
     ...
-    entity: { children: &lt;Badge classModifier=&quot;info&quot;&gt;{entity}&lt;/Badge&gt; },
-  },</code>
-              <textarea class="sg-code-input">...
-  cols: {
+    entity: {
+      classModifier: 'actions',
+      children: &lt;Badge classModifier=&quot;info&quot;&gt;{entity}&lt;/Badge&gt;
+    },</code>
+              <textarea class="sg-code-input">cols: {
     ...
-    entity: { children: &lt;Badge classModifier=&quot;info&quot;&gt;{entity}&lt;/Badge&gt; },
-  },</textarea></pre>
+    entity: {
+      classModifier: 'actions',
+      children: &lt;Badge classModifier=&quot;info&quot;&gt;{entity}&lt;/Badge&gt;
+    },</textarea></pre>
           </section>
           <section class="sg-exo1-cucumber-10" id="exo1-cucumber-10" data-background="" data-background-transition="fade">          
             <h2>Passage des données à la vue</h2><span class="file">src/page/People/People.tsx : PeopleContainer </span>
@@ -1928,7 +1935,7 @@ import { computeInfos, usePeople } from '../People';</textarea>
             </div>
           </section>
           <section class="sg-exo1-solution" id="exo1-solution" data-background="" data-background-transition="fade" data-auto-animate="data-auto-animate">           
-            <h2>Solution</h2><span class="file">Dispo sur la branche dojo-exo1 sur <a href="https://github.com/samuel-gomez/react-starter-vitejs/tree/feature/dojo-exo1">Github</a></span>
+            <h2>Solution</h2><span class="file">Dispo sur la branche feature/dojo sur <a href="https://github.com/samuel-gomez/react-starter-vitejs/commit/0e6e9b1eece6d980c7b4d16f21777e4d213ae1d1">Github</a></span>
           </section>
         </section>
         <section class="sg-exo2" id="exo2" data-background="" data-background-transition="fade">
@@ -1954,7 +1961,7 @@ import { computeInfos, usePeople } from '../People';</textarea>
             </ul>
           </section>
           <section class="sg-exo2-proto" id="exo2-proto" data-background="" data-background-transition="fade">
-            <h2>Le prototype</h2>
+            <h2>Le prototype</h2><a href="https://xptiz0.axshare.com/liste_des_gens.html" target="blank">Ouvrir le prototype dans un onglet</a>
             <iframe class="af-prototype" src="https://xptiz0.axshare.com/liste_des_gens.html"></iframe>
           </section>
           <section class="sg-exo2-tech-infos" id="exo2-tech-infos" data-background="" data-background-transition="fade">
@@ -1972,6 +1979,9 @@ import { computeInfos, usePeople } from '../People';</textarea>
 &lt;/Button&gt;</textarea></pre>
               </li>
             </ul>
+          </section>
+          <section class="sg-exo1-solution" id="exo1-solution" data-background="" data-background-transition="fade" data-auto-animate="data-auto-animate">           
+            <h2>Solution</h2><span class="file">Dispo sur la branche feature/dojo sur <a href="https://github.com/samuel-gomez/react-starter-vitejs/commit/9b8cc7a147611a77b994c26e7212976c2d41604d">Github</a></span>
           </section>
         </section>
       </div>

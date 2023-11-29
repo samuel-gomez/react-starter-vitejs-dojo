@@ -103,7 +103,7 @@
             span.file #{rootPagePeople}People.tsx : typage
             pre(data-id="code-animation")  
                   +Code({ content : files.people[6] })
-      +Section({ name :'exo1-cucumber-8', autoAnimate: true })           
+      +Section({ name :'exo1-api-url', autoAnimate: true })           
             h2 Définir l'url d'API
             span.file Ajouter l'url d'API dans le fichier /public/environment.development.json
             pre.code-wrapper--notes(data-id="code-animation")
@@ -113,6 +113,20 @@
             h2 Récupération des données            
             span.file #{rootPagePeople}People.tsx : 
                   em usePeople
+            +Alert({ modifier: 'success'})
+                  strong Remarque : 
+                  | useQuery retourne 
+                  strong isLoading 
+                  | pour l'état de chargement du cache ou 
+                  strong isFecthing 
+                  | pour l'état du fetch.
+                  br 
+                  | Par défaut, React Query affiche les données du cache et effectue en parallèle un appel fetch pour rafraichir les données.
+                  br 
+                  | Si on souhaite afficher le loader tant que le fetch n'est pas terminé, il faut utiliser isFetching
+                  br
+                  | On peut également limiter le rafraichissement des données avec l'option 
+                  strong staleTime 
             .r-stack
                   pre.code-wrapper--notes.fragment.fade-in-then-out  
                         +Notes({ notes: notes.usePeople[0], fragment: false })
@@ -134,7 +148,7 @@
       +Section({ name :'exo1-cucumber-9'})           
             h2 Formatage des données 
             span.file #{rootPagePeople}People.tsx : 
-                  em computeInfos 
+                  em computeInfos            
             .r-stack
                   pre.code-wrapper--notes.fragment.fade-in-then-out  
                         +Notes({ notes: notes.computeInfos[0], fragment: false })
@@ -150,9 +164,9 @@
                         +Code({ content : files.people[3],  dataLineNumbers: "5-8"  })
             +Alert({ modifier: 'success'})
                   strong Injecter du JSX : 
-                  | il n'est pas obligatoire d'utiliser la méthode setDisplay, on peut directement le contenu texte ou injecter un composant React.
+                  | il n'est pas obligatoire d'utiliser la méthode setDisplay, on peut directement mettre du contenu texte ou injecter un composant React.
             pre
-                  +Code({ content : files.people[7],  dataLineNumbers: "4"  })
+                  +Code({ content : files.people[7],  dataLineNumbers: "4-5"  }) 
       +Section({ name :'exo1-cucumber-10'})           
             h2 Passage des données à la vue
             span.file #{rootPagePeople}People.tsx : PeopleContainer 
@@ -226,6 +240,6 @@
                         +Code({ content : files.unitTestPeople[5]  })
       +Section({ name :'exo1-solution', autoAnimate: true })            
             h2 Solution
-            span.file Dispo sur la branche dojo-exo1 sur 
-                  a(href="https://github.com/samuel-gomez/react-starter-vitejs/tree/feature/dojo-exo1") Github
+            span.file Dispo sur la branche feature/dojo sur 
+                  a(href="https://github.com/samuel-gomez/react-starter-vitejs/commit/0e6e9b1eece6d980c7b4d16f21777e4d213ae1d1") Github
       
