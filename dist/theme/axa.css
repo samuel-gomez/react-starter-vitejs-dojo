@@ -403,6 +403,9 @@ section.has-dark-background, section.has-dark-background h1, section.has-dark-ba
   line-height: 1.5rem;
   position: relative;
 }
+.reveal .code-wrapper code.sg-code--no-max-height {
+  max-height: inherit;
+}
 .reveal .code-wrapper .sg-code-input {
   display: none;
 }

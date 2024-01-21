@@ -33,13 +33,19 @@ export type TPeople = TLayoutPage;
 
 const People = ({ titleBar = TITLE_BAR, title = TITLE }: TPeople) => (
   <Layout propsTitle={{ title: titleBar, backHome: true }}>
-    <h1 className="af-title--content">{title}</h1>
+    <h2 className="af-title--content">{title}</h2>
     <p>Ma page people</p>
   </Layout>
 );
 
 export default People;`,
-      `export const usePeople = () => {
+      `import { useQuery } from '@tanstack/react-query';
+import Layout, { type TLayoutPage } from 'Layout';
+import { setAnomalyEmptyItems } from 'shared/helpers';
+import { type Tanomaly } from 'shared/types';
+import { ENDPOINT, SERVICE_NAME, TITLE, TITLE_BAR } from './constants';
+
+export const usePeople = () => {
   const { data, isLoading, error, refetch } = useQuery({
     queryKey: [ENDPOINT],
     select: ({ responseBody }: TPeopleDataResponse) => ({
@@ -57,7 +63,11 @@ export default People;`,
 };
 
 export type TReturnUsePeople = ReturnType<typeof usePeople>;`,
-      `export const computeInfos = (data: TPeopleData[]) =>
+      `...
+import { setAnomalyEmptyItems, setDate } from 'shared/helpers';
+import { setDisplay } from 'shared/components/Table';
+...
+export const computeInfos = (data: TPeopleData[]) =>
 data?.map(({ _id, firstname, lastname, birthDate, entity }) => ({
   key: _id,
   cols: {
@@ -67,13 +77,21 @@ data?.map(({ _id, firstname, lastname, birthDate, entity }) => ({
     ...setDisplay({ entity }),
   },
 }));`,
-      `const PeopleContainer = () => {
+      `...
+import { setLoaderMode } from 'shared/components/Loader';
+...
+const PeopleContainer = () => {
   const { anomaly, isLoading, people, refetch } = usePeople();
   return <People people={people} loaderMode={setLoaderMode({ isLoading })} refetch={refetch} anomaly={anomaly} />;
 };
 
 export default PeopleContainer;`,
-      `export type TPeople = TLayoutPage &
+      `...
+import Loader, { TLoader, setLoaderMode } from 'shared/components/Loader';
+import Resilience from 'shared/components/Resilience';
+import Table, { setDisplay } from 'shared/components/Table';
+...
+export type TPeople = TLayoutPage &
   Pick<TReturnUsePeople, 'people' | 'anomaly' | 'refetch'> & {
     loaderMode: TLoader['mode'];
     headers?: typeof TABLE_HEADERS_PEOPLE;
@@ -81,10 +99,10 @@ export default PeopleContainer;`,
 
 const People = ({ titleBar = TITLE_BAR, title = TITLE, people, headers = TABLE_HEADERS_PEOPLE, refetch, loaderMode, anomaly }: TPeople) => (
   <Layout propsTitle={{ title: titleBar, backHome: true }}>
-    <h1 className="af-title--content">{title}</h1>
+    <h2 className="af-title--content">{title}</h2>
     <Loader mode={loaderMode}>
       <Resilience anomaly={anomaly} refetch={refetch as React.MouseEventHandler<HTMLButtonElement>}>
-        <Table items={people} headers={headers} aria-label={${`\``}\${title}${`\``}} />
+        <Table title="Titre de mon tableau" items={people} headers={headers} itemsType="membres" />
       </Resilience>
     </Loader>
   </Layout>
@@ -180,16 +198,15 @@ And le tableau contient 4 lignes avec 4 colonnes dans l'ordre suivant :
     ],
     testPeople: [
       `import { defineFeature, loadFeature } from 'jest-cucumber';
-import { render, screen, configure } from 'shared/testsUtils/customRender';
-import { JeSuisUnUtilisateurConnuEtConnecteAvecleProfil, UnTitreEstVisible } 
-  from 'shared/testsUtils/sharedScenarios';
-import People from '..';      
-const feature = loadFeature('features/People/People.feature');      
+import { configure } from 'shared/testsUtils/customRender';
+
 configure({ defaultHidden: true });
+
+const feature = loadFeature('features/People/People.feature');
 
 defineFeature(feature, test => {
   test('Affichage de la page People', ({ given, and, when, then }) => {});
-});
+});      
       `,
       `defineFeature(feature, test => {
   test('Affichage de la page People', ({ given, when, then }) => {
@@ -199,7 +216,12 @@ defineFeature(feature, test => {
   });
 });
       `,
-      `defineFeature(feature, test => {
+      `...
+import { configure, render, screen } from 'shared/testsUtils/customRender';
+import { JeSuisUnUtilisateurConnuEtConnecteAvecleProfil, UnTitreEstVisible } from 'shared/testsUtils/sharedScenarios';
+import People from '..';
+...
+defineFeature(feature, test => {
   let role: string;
 
   test('Affichage de la page People', ({ given, when, then }) => {
@@ -210,7 +232,7 @@ defineFeature(feature, test => {
       render(<People />, {}, { role });
       expect(await screen.findByText('Samuel Gomez')).toBeInTheDocument();
     });
-    UnTitreEstVisible(then);
+    UnTitreEstVisible(then,2);
   });
 });`,
       `test('Affichage de la page People', ({ given, when, then, and }) => {
@@ -222,12 +244,22 @@ defineFeature(feature, test => {
     render(<People />, {}, { role });
     expect(await screen.findByText('Samuel Gomez')).toBeInTheDocument();
   });
-  UnTitreEstVisible(then);
+  UnTitreEstVisible(then,2);
   and('la page contient un tableau répertoriant la liste des gens', () => {});
   and(/^le tableau présente des entêtes de colonnes dans l’ordre suivant : "(.*)", "(.*)", "(.*)", "(.*)"$/, (arg0, arg1, arg2, arg3) => {});
   and(/^le tableau contient (\\d+) lignes avec (\\d+) colonnes dans l'ordre suivant :$/, (arg0, arg1, table) => {});
 });`,
       `...
+import {
+  JeSuisUnUtilisateurConnuEtConnecteAvecleProfil,
+  LaPageContientUnTableau,
+  LeTableauContientLesLignesCorrespondantAuxDonneesRecues,
+  LeTableauPresenteDesEntetesDeColonnesDansLOrdreSuivant,
+  UnTitreEstVisible,
+} from 'shared/testsUtils/sharedScenarios';
+import { serverUseGet } from 'shared/testsUtils/msw';
+import People from '..';
+  ...
   const tableAriaLabel = 'Tableau des gens';
   and('la page reçoit les données suivantes', responseBody => {
     serverUseGet<TPeopleData[]>({ route: 'people', responseBody }); // le typage sera fait juste après
@@ -327,139 +359,162 @@ import { computeInfos, usePeople } from '../People';`,
     constants: [
       {
         line: 4,
-        content: "on créé une constante pour le nom du service",
+        content: 'on créé une constante pour le nom du service',
       },
       {
         line: 5,
-        content: "on créé une constante pour le endpoint",
+        content: 'on créé une constante pour le endpoint',
       },
       {
         line: 7,
         content:
-          "on créé une constante qui contiendra les infos du header pour le tableau",
+          'on créé une constante qui contiendra les infos du header pour le tableau',
       },
     ],
     layout: [
       {
         line: 1,
-        content: "on importe le Composant Layout",
+        content: 'on importe le Composant Layout',
       },
       {
         line: 2,
-        content: "on importe les constantes",
+        content: 'on importe les constantes',
       },
       {
         line: 4,
-        content: "On définit le type du Composant People",
+        content: 'On définit le type du Composant People',
       },
       {
         line: 6,
-        content: "On met à jour les props du Composant People",
+        content: 'On met à jour les props du Composant People',
       },
       {
         line: 7,
-        content: "Composant Layout avec les propriétés propsTitle",
+        content: 'Composant Layout avec les propriétés propsTitle',
       },
       {
         line: 8,
-        content: "On ajoute un titre ",
+        content: 'On ajoute un titre ',
       },
     ],
     routesConstants: [
       {
         line: 2,
-        content: "on importe la route depuis le Composant People",
+        content: 'on importe la route depuis le Composant People',
       },
       {
         line: 6,
-        content: "On réexporte pour centraliser les routes",
+        content: 'On réexporte pour centraliser les routes',
       },
     ],
     routes: [
       {
         line: 2,
-        content: "on importe le Composant People",
+        content: 'on importe le Composant People',
       },
       {
         line: 8,
-        content: "On ajoute la route dans le Router",
+        content: 'On ajoute la route dans le Router',
       },
     ],
     constantsMenu: [
       {
         line: 12,
-        content: "On ajoute le lien dans le menu",
+        content: 'On ajoute le lien dans le menu',
         isFragment: false,
       },
     ],
     testPeople: [
       {
         line: 1,
-        content: "On importe Jest Cucumber",
+        content: 'On importe Jest Cucumber',
       },
       {
         line: 2,
-        content: "On importe Testing Library via le customRender",
+        content:
+          'On importe "configure" de Testing Library via le customRender',
       },
       {
         line: 3,
-        content: "On importe les scénarios type dont on a besoin",
+        content: `On inclut les éléments cachés pour l'accessibilité (<a target="blank" href="https://testing-library.com/docs/queries/byrole#hidden" >doc</a>)`,
       },
       {
-        line: 7,
-        content: "On affiche les éléments cachés pour les tests",
+        line: 6,
+        content: 'On importe le fichier People.feature',
       },
       {
-        line: 9,
-        content: "On importe le fichier People.feature",
-      },
-      {
-        line: 12,
-        content: "On pose le test à vide",
+        line: 8,
+        content: 'On pose le test à vide',
       },
     ],
     testPeople2: [
       {
-        line: 5,
-        content: "On mocke le role depuis les valeurs du scénario",
+        line: 2,
+        content: 'On importe "render" et "screen" de Testing Library',
       },
       {
-        line: 9,
-        content: "On rend la page avec le rôle défini",
+        line: 3,
+        content: 'On importe les scénarios type',
+      },
+      {
+        line: 4,
+        content: 'On importe notre composant de page',
       },
       {
         line: 10,
+        content: 'On mocke le role depuis les valeurs du scénario',
+      },
+      {
+        line: 14,
+        content: 'On rend la page avec le rôle défini',
+      },
+      {
+        line: 15,
         content: "On vérifie le nom de l'utilisateur",
+      },
+      {
+        line: 17,
+        content: 'On vérifie la présence du titre de niveau 2',
       },
     ],
     featurePeople: [
       {
         line: 2,
-        content: "On mocke les données reçues",
+        content:
+          "On définie les données reçues via l'api que l'on va fournir à MSW",
       },
       {
         line: 10,
-        content: "On vérifie la présence du tableau",
+        content: 'On vérifie la présence du tableau',
       },
       {
         line: 11,
-        content: "On vérifie les entêtes",
+        content: 'On vérifie les entêtes du tableau',
       },
       {
         line: 12,
-        content: "On vérifie le contenu",
+        content: 'On vérifie le contenu du tableau',
       },
     ],
     testPeople3: [
       {
-        line: 3,
-        content:
-          "La méthode <i>serverUseGet</i> permet de passer les données provenant du gherkin comme réponse renvoyée sur un endpoint d'API (cf fichier msw.ts)",
+        line: 4,
+        content: 'On importe les scénarios type',
       },
       {
-        line: 7,
+        line: 9,
         content:
-          "Ensuite, on remplace les scénarios générés par les scénarios type",
+          'On importe <i>serverUseGet</i> qui permet de mocker les appels réseaux en GET via MSW',
+      },
+      {
+        line: 14,
+        content:
+          'On passe les données du guerkin à la méthode <i>serverUseGet</i> (le typage sera fait après)',
+      },
+      {
+        line: 17,
+        content:
+          'Ensuite, on remplace les scénarios générés par les scénarios type',
       },
     ],
     usePeople: [
@@ -467,73 +522,86 @@ import { computeInfos, usePeople } from '../People';`,
         {
           line: 1,
           content:
+            'On importe useQuery de React Query, setAnomalyEmptyItems, Tanomaly et nos constantes',
+        },
+      ],
+      [
+        {
+          line: 7,
+          content:
             "On créé un hook custom pour effectuer l'appel avec React Query",
         },
       ],
       [
         {
-          line: 2,
+          line: 8,
           content:
             "On passe la route au useQuery, il nous retourne les données, l'état du fetch, l'état de l'erreur, et une méthode refetch",
         },
       ],
       [
         {
-          line: 3,
+          line: 10,
           content:
             "En second paramètre, sur la propriété select, on peut passer une fonction qui s'exécutera après avoir reçu les données pour effectuer des traitements",
         },
       ],
       [
         {
-          line: 4,
+          line: 10,
           content:
             "ici, on renvoie un objet contenant l'anomalie en cas de réponse à vide et les données formatées en cas de données non vides",
         },
       ],
       [
         {
-          line: 5,
+          line: 10,
           content:
             "<i>setAnomalyEmptyItems</i> est une fonction utilitaire qui va renvoyer un objet dans l'anomalie qui affichera une alert",
         },
       ],
       [
         {
-          line: 6,
+          line: 11,
           content:
             "<i>computeInfos</i> est une fonction que l'on va créer pour respecter le format de données attendu par le tableau",
         },
       ],
       [
         {
-          line: 12,
-          content: "Enfin, on retourne les valeurs utiles à la vue",
+          line: 17,
+          content: 'Enfin, on retourne les valeurs utiles à la vue',
         },
       ],
     ],
     peopleContainer: [
       [
         {
-          line: 1,
-          content: "On déclare un nouveau composant",
-        },
-      ],
-      [
-        {
           line: 2,
-          content: "On récupère les données via notre hook custom",
+          content: 'On importe la fonction setLoaderMode',
         },
       ],
       [
         {
-          line: 3,
-          content: "On les passe à la vue",
+          line: 4,
+          content: 'On déclare un nouveau composant',
+        },
+      ],
+      [
+        {
+          line: 5,
+          content: 'On récupère les données via notre hook custom',
         },
       ],
       [
         {
           line: 6,
+          content: 'On les passe à la vue',
+        },
+      ],
+      [
+        {
+          line: 9,
           content: "On modifie l'export par défaut",
         },
       ],
@@ -541,62 +609,74 @@ import { computeInfos, usePeople } from '../People';`,
     computeInfos: [
       [
         {
-          line: 1,
-          content: "On récupère les données",
-        },
-      ],
-      [
-        {
           line: 2,
-          content: "On boucle sur les données",
-        },
-      ],
-      [
-        {
-          line: 3,
-          content: "Pour chaque item, on renvoie les données formatées",
+          content: 'On modifie les imports',
         },
       ],
       [
         {
           line: 5,
+          content: 'La fonction reçoit les données brutes',
+        },
+      ],
+      [
+        {
+          line: 6,
+          content: 'On boucle sur les données',
+        },
+      ],
+      [
+        {
+          line: 7,
+          content: 'Pour chaque item, on renvoie les données formatées',
+        },
+      ],
+      [
+        {
+          line: 9,
           content:
-            "La méthode <em>setDisplay</em> formate les données pour chaque cellule du tableau",
+            'La méthode <em>setDisplay</em> formate les données pour chaque cellule du tableau',
         },
       ],
     ],
     people: [
       [
         {
-          line: 1,
-          content: "On modifie le type de People",
+          line: 2,
+          content: 'On ajoute les imports nécessaires',
         },
       ],
       [
         {
-          line: 7,
+          line: 6,
+          content: 'On modifie le type de People',
+        },
+      ],
+      [
+        {
+          line: 12,
           content: "On modifie les props d'entrée",
         },
       ],
       [
         {
-          line: 10,
+          line: 15,
           content:
             "On ajoute le Loader qui affichera un <br/>loader en fonction de l'état de chargement",
         },
       ],
       [
         {
-          line: 11,
+          line: 16,
           content:
             "On ajoute le composant Resilience <br/>qui affichera un fallback en cas d'anomalie",
         },
       ],
       [
         {
-          line: 12,
+          line: 17,
           content:
-            "On ajoute le composant Table <br/>qui affichera le tableau si tout est ok",
+            'On ajoute le composant Table <br/>qui affichera le tableau si tout est ok',
         },
       ],
     ],
@@ -604,45 +684,45 @@ import { computeInfos, usePeople } from '../People';`,
       [
         {
           line: 1,
-          content: "On importe waitFor et customRenderHook.",
+          content: 'On importe waitFor et customRenderHook.',
         },
       ],
       [
         {
           line: 1,
           content:
-            "<em>customRenderHook</em> permet de modifier les données renvoyée par React Query",
+            '<em>customRenderHook</em> permet de modifier les données renvoyée par React Query',
         },
       ],
       [
         {
           line: 2,
-          content: "Cas avec des données",
+          content: 'Cas avec des données',
         },
       ],
       [
         {
           line: 7,
-          content: "Cas données vides",
+          content: 'Cas données vides',
         },
       ],
       [
         {
           line: 5,
-          content: "Cas avec des données",
+          content: 'Cas avec des données',
         },
       ],
       [
         {
           line: 4,
-          content: "Cas données vides",
+          content: 'Cas données vides',
         },
       ],
       [
         {
           line: 9,
           content:
-            "On rend notre hook en passant le mock que doit renvoyer React Query",
+            'On rend notre hook en passant le mock que doit renvoyer React Query',
         },
       ],
     ],

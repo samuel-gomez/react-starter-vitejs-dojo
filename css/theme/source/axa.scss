@@ -5,8 +5,8 @@
  */
 
 // Default mixins and settings -----------------
-@import "../template/mixins";
-@import "../template/settings";
+@import '../template/mixins';
+@import '../template/settings';
 // ---------------------------------------------
 
 // Include theme-specific fonts
@@ -25,8 +25,8 @@ $darkTextColor: #333;
 $backgroundColor: linear-gradient(0deg, black 0%, var(--r-axa-blue-color) 100%);
 
 $mainFontSize: 42px;
-$mainFont: "Source Sans Pro", Helvetica, sans-serif;
-$headingFont: "Publico", Helvetica, sans-serif;
+$mainFont: 'Source Sans Pro', Helvetica, sans-serif;
+$headingFont: 'Publico', Helvetica, sans-serif;
 $headingTextShadow: 0.5rem 0.5rem 1rem rgba(0, 0, 0, 0.5);
 $heading1TextShadow: 0.5rem 0.5rem 1rem rgba(0, 0, 0, 0.5);
 $heading2TextShadow: 0.2rem 0.2rem 0.2rem rgba(0, 0, 0, 0.5);
@@ -46,7 +46,7 @@ $heading4Size: clamp(0.5em, 5vw, 1em);
 @include dark-bg-text-color(white);
 
 // Theme template ------------------------------
-@import "../template/theme";
+@import '../template/theme';
 // ---------------------------------------------
 
 :root {
@@ -60,7 +60,7 @@ $heading4Size: clamp(0.5em, 5vw, 1em);
 
 .reveal {
   h1::before {
-    content: "";
+    content: '';
     width: clamp(36px, 4vw, 50px);
     height: clamp(78px, 6vw, 100px);
     transform: skewX(-30deg);
@@ -72,7 +72,7 @@ $heading4Size: clamp(0.5em, 5vw, 1em);
     color: var(--r-heading-color);
     text-shadow: var(--r-heading2-text-shadow);
     &::before {
-      content: "";
+      content: '';
       width: 30px;
       height: 69px;
       transform: skewX(-30deg);
@@ -97,6 +97,9 @@ $heading4Size: clamp(0.5em, 5vw, 1em);
       font-size: 1rem;
       line-height: 1.5rem;
       position: relative;
+      &.sg-code--no-max-height {
+        max-height: inherit;
+      }
     }
     .sg-code-input {
       display: none;

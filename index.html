@@ -595,9 +595,9 @@
                Commençons par créer une nouvelle page<br>Dans le dossier /pages, créez un nouveau dossier /People<br>le but sera de récupérer les données d'une API et de les afficher dans un tableau</p>
           </section>
           <section class="sg-exo1-page" id="exo1-page" data-background="" data-background-transition="fade">           
-            <h2>Création de la page</h2><span class="file">src/page/People/index.ts</span>
+            <h2>Création de la page</h2><span class="file">src/pages/People/index.ts</span>
             <pre><code class="language-javascript sg-code js-code" data-trim="data-trim" data-line-numbers="" data-ln-start-from="">export { default } from './People';</code>
-              <textarea class="sg-code-input">export { default } from './People';</textarea></pre><span class="file">src/page/People/People.tsx </span>
+              <textarea class="sg-code-input">export { default } from './People';</textarea></pre><span class="file">src/pages/People/People.tsx </span>
             <pre><code class="language-javascript sg-code js-code" data-trim="data-trim" data-line-numbers="" data-ln-start-from="">import { TITLE_BAR, TITLE } from './constants';
       
 const People = () =&gt; (
@@ -614,13 +614,13 @@ const People = () =&gt; (
 export default People;</textarea></pre>
           </section>
           <section class="sg-exo1-layout" id="exo1-layout" data-background="" data-background-transition="fade"> 
-            <h2>Ajouter le layout </h2><span class="file">src/page/People/constants.ts</span>
+            <h2>Ajouter le layout </h2><span class="file">src/pages/People/constants.ts</span>
             <pre><code class="language-javascript sg-code js-code" data-trim="data-trim" data-line-numbers="" data-ln-start-from="">export const TITLE_BAR = 'Liste des gens';
 export const TITLE = 'Tableau des gens';
 export const ROUTE_URL_PEOPLE = 'people';</code>
               <textarea class="sg-code-input">export const TITLE_BAR = 'Liste des gens';
 export const TITLE = 'Tableau des gens';
-export const ROUTE_URL_PEOPLE = 'people';</textarea></pre><span class="file">src/page/People/People.tsx</span>
+export const ROUTE_URL_PEOPLE = 'people';</textarea></pre><span class="file">src/pages/People/People.tsx</span>
             <pre class="code-wrapper--notes">      
               <div class="sg-notes">
                 <div class="sg-note fragment fade-in-then-out" style="top: 10px"><span class="sg-note__content">on importe le Composant Layout</span></div>
@@ -636,7 +636,7 @@ export type TPeople = TLayoutPage;
 
 const People = ({ titleBar = TITLE_BAR, title = TITLE }: TPeople) =&gt; (
   &lt;Layout propsTitle={{ title: titleBar, backHome: true }}&gt;
-    &lt;h1 className=&quot;af-title--content&quot;&gt;{title}&lt;/h1&gt;
+    &lt;h2 className=&quot;af-title--content&quot;&gt;{title}&lt;/h2&gt;
     &lt;p&gt;Ma page people&lt;/p&gt;
   &lt;/Layout&gt;
 );
@@ -649,7 +649,7 @@ export type TPeople = TLayoutPage;
 
 const People = ({ titleBar = TITLE_BAR, title = TITLE }: TPeople) =&gt; (
   &lt;Layout propsTitle={{ title: titleBar, backHome: true }}&gt;
-    &lt;h1 className=&quot;af-title--content&quot;&gt;{title}&lt;/h1&gt;
+    &lt;h2 className=&quot;af-title--content&quot;&gt;{title}&lt;/h2&gt;
     &lt;p&gt;Ma page people&lt;/p&gt;
   &lt;/Layout&gt;
 );
@@ -779,44 +779,41 @@ const PagePeople = lazy(() =&gt; import('pages/People'));
       </textarea></pre>
           </section>
           <section class="sg-exo1-cucumber" id="exo1-cucumber" data-background="" data-background-transition="fade" data-auto-animate="data-auto-animate">           
-            <h2>Ajouter le fichier de test</h2><span class="file">src/page/People/__tests__/People.spec.tsx </span>
+            <h2>Ajouter le fichier de test </h2><span class="file">src/pages/People/__tests__/People.spec.tsx </span>
             <pre class="code-wrapper--notes" data-id="code-animation">
               <div class="sg-notes">
                 <div class="sg-note fragment fade-in-then-out" style="top: 10px"><span class="sg-note__content">On importe Jest Cucumber</span></div>
-                <div class="sg-note fragment fade-in-then-out" style="top: 33.5px"><span class="sg-note__content">On importe Testing Library via le customRender</span></div>
-                <div class="sg-note fragment fade-in-then-out" style="top: 57px"><span class="sg-note__content">On importe les scénarios type dont on a besoin</span></div>
-                <div class="sg-note fragment fade-in-then-out" style="top: 151px"><span class="sg-note__content">On affiche les éléments cachés pour les tests</span></div>
-                <div class="sg-note fragment fade-in-then-out" style="top: 198px"><span class="sg-note__content">On importe le fichier People.feature</span></div>
-                <div class="sg-note fragment fade-in-then-out" style="top: 268.5px"><span class="sg-note__content">On pose le test à vide</span></div>
+                <div class="sg-note fragment fade-in-then-out" style="top: 33.5px"><span class="sg-note__content">On importe "configure" de Testing Library via le customRender</span></div>
+                <div class="sg-note fragment fade-in-then-out" style="top: 57px"><span class="sg-note__content">On inclut les éléments cachés pour l'accessibilité (<a target="blank" href="https://testing-library.com/docs/queries/byrole#hidden" >doc</a>)</span></div>
+                <div class="sg-note fragment fade-in-then-out" style="top: 127.5px"><span class="sg-note__content">On importe le fichier People.feature</span></div>
+                <div class="sg-note fragment fade-in-then-out" style="top: 174.5px"><span class="sg-note__content">On pose le test à vide</span></div>
               </div><code class="language-javascript sg-code js-code" data-trim="data-trim" data-line-numbers="" data-ln-start-from="">import { defineFeature, loadFeature } from 'jest-cucumber';
-import { render, screen, configure } from 'shared/testsUtils/customRender';
-import { JeSuisUnUtilisateurConnuEtConnecteAvecleProfil, UnTitreEstVisible } 
-  from 'shared/testsUtils/sharedScenarios';
-import People from '..';      
-const feature = loadFeature('features/People/People.feature');      
+import { configure } from 'shared/testsUtils/customRender';
+
 configure({ defaultHidden: true });
+
+const feature = loadFeature('features/People/People.feature');
 
 defineFeature(feature, test =&gt; {
   test('Affichage de la page People', ({ given, and, when, then }) =&gt; {});
-});
+});      
       </code>
               <textarea class="sg-code-input">import { defineFeature, loadFeature } from 'jest-cucumber';
-import { render, screen, configure } from 'shared/testsUtils/customRender';
-import { JeSuisUnUtilisateurConnuEtConnecteAvecleProfil, UnTitreEstVisible } 
-  from 'shared/testsUtils/sharedScenarios';
-import People from '..';      
-const feature = loadFeature('features/People/People.feature');      
+import { configure } from 'shared/testsUtils/customRender';
+
 configure({ defaultHidden: true });
+
+const feature = loadFeature('features/People/People.feature');
 
 defineFeature(feature, test =&gt; {
   test('Affichage de la page People', ({ given, and, when, then }) =&gt; {});
-});
+});      
       </textarea></pre>
           </section>
           <section class="sg-exo1-cucumber-2" id="exo1-cucumber-2" data-background="" data-background-transition="fade" data-auto-animate="data-auto-animate">           
             <h2>Générer le test</h2><span class="file">Lancer la commande suivante :</span>
             <pre>                 <code class="language-javascript sg-code js-code" data-trim="data-trim" data-ln-start-from="">npm t People.spec.tsx</code>
-              <textarea class="sg-code-input">npm t People.spec.tsx</textarea></pre><span class="file">Récupérez le code généré dans le terminal</span><br><span class="file">src/page/People/__tests__/People.spec.tsx </span>
+              <textarea class="sg-code-input">npm t People.spec.tsx</textarea></pre><span class="file">Récupérez le code généré dans le terminal</span><br><img class="sg-img " src="././assets/images/guerkin-test-fail.jpg" alt="guerkin test fail" loading="lazy"/><br><span class="file">src/pages/People/__tests__/People.spec.tsx </span>
             <pre data-id="code-animation">              <code class="language-javascript sg-code js-code" data-trim="data-trim" data-line-numbers="3-5" data-ln-start-from="">defineFeature(feature, test =&gt; {
   test('Affichage de la page People', ({ given, when, then }) =&gt; {
     given(/^Je suis un utilisateur connu et connecté avec le profil (.*)$/, arg0 =&gt; {});
@@ -835,13 +832,22 @@ defineFeature(feature, test =&gt; {
       </textarea></pre>
           </section>
           <section class="sg-exo1-cucumber-3" id="exo1-cucumber-3" data-background="" data-background-transition="fade" data-auto-animate="data-auto-animate">          
-            <h2>Modifier le test</h2><span class="file">src/page/People/__tests__/People.spec.tsx</span>
+            <h2>Modifier le test</h2><span class="file">src/pages/People/__tests__/People.spec.tsx</span>
             <pre class="code-wrapper--notes" data-id="code-animation"> 
               <div class="sg-notes">
-                <div class="sg-note fragment fade-in-then-out" style="top: 104px"><span class="sg-note__content">On mocke le role depuis les valeurs du scénario</span></div>
-                <div class="sg-note fragment fade-in-then-out" style="top: 198px"><span class="sg-note__content">On rend la page avec le rôle défini</span></div>
-                <div class="sg-note fragment fade-in-then-out" style="top: 221.5px"><span class="sg-note__content">On vérifie le nom de l'utilisateur</span></div>
-              </div><code class="language-javascript sg-code js-code" data-trim="data-trim" data-line-numbers="2,5-12" data-ln-start-from="">defineFeature(feature, test =&gt; {
+                <div class="sg-note fragment fade-in-then-out" style="top: 33.5px"><span class="sg-note__content">On importe "render" et "screen" de Testing Library</span></div>
+                <div class="sg-note fragment fade-in-then-out" style="top: 57px"><span class="sg-note__content">On importe les scénarios type</span></div>
+                <div class="sg-note fragment fade-in-then-out" style="top: 80.5px"><span class="sg-note__content">On importe notre composant de page</span></div>
+                <div class="sg-note fragment fade-in-then-out" style="top: 221.5px"><span class="sg-note__content">On mocke le role depuis les valeurs du scénario</span></div>
+                <div class="sg-note fragment fade-in-then-out" style="top: 315.5px"><span class="sg-note__content">On rend la page avec le rôle défini</span></div>
+                <div class="sg-note fragment fade-in-then-out" style="top: 339px"><span class="sg-note__content">On vérifie le nom de l'utilisateur</span></div>
+                <div class="sg-note fragment fade-in-then-out" style="top: 386px"><span class="sg-note__content">On vérifie la présence du titre de niveau 2</span></div>
+              </div><code class="language-javascript sg-code  sg-code--no-max-height js-code  js-code--no-max-height" data-trim="data-trim" data-line-numbers="2-4, 7, 10-17" data-ln-start-from="">...
+import { configure, render, screen } from 'shared/testsUtils/customRender';
+import { JeSuisUnUtilisateurConnuEtConnecteAvecleProfil, UnTitreEstVisible } from 'shared/testsUtils/sharedScenarios';
+import People from '..';
+...
+defineFeature(feature, test =&gt; {
   let role: string;
 
   test('Affichage de la page People', ({ given, when, then }) =&gt; {
@@ -852,10 +858,15 @@ defineFeature(feature, test =&gt; {
       render(&lt;People /&gt;, {}, { role });
       expect(await screen.findByText('Samuel Gomez')).toBeInTheDocument();
     });
-    UnTitreEstVisible(then);
+    UnTitreEstVisible(then,2);
   });
 });</code>
-              <textarea class="sg-code-input">defineFeature(feature, test =&gt; {
+              <textarea class="sg-code-input">...
+import { configure, render, screen } from 'shared/testsUtils/customRender';
+import { JeSuisUnUtilisateurConnuEtConnecteAvecleProfil, UnTitreEstVisible } from 'shared/testsUtils/sharedScenarios';
+import People from '..';
+...
+defineFeature(feature, test =&gt; {
   let role: string;
 
   test('Affichage de la page People', ({ given, when, then }) =&gt; {
@@ -866,19 +877,19 @@ defineFeature(feature, test =&gt; {
       render(&lt;People /&gt;, {}, { role });
       expect(await screen.findByText('Samuel Gomez')).toBeInTheDocument();
     });
-    UnTitreEstVisible(then);
+    UnTitreEstVisible(then,2);
   });
 });</textarea></pre>
           </section>
           <section class="sg-exo1-cucumber-4" id="exo1-cucumber-4" data-background="" data-background-transition="fade" data-auto-animate="data-auto-animate">          
-            <h2>Modifier le scénario </h2><span class="file">Feature/People/People.feature </span>
+            <h2>Modifier le scénario</h2><span class="file">Feature/People/People.feature </span>
             <pre class="code-wrapper--notes" data-id="code-animation"> 
               <div class="sg-notes">
-                <div class="sg-note fragment fade-in-then-out" style="top: 33.5px"><span class="sg-note__content">On mocke les données reçues</span></div>
+                <div class="sg-note fragment fade-in-then-out" style="top: 33.5px"><span class="sg-note__content">On définie les données reçues via l'api que l'on va fournir à MSW</span></div>
                 <div class="sg-note fragment fade-in-then-out" style="top: 221.5px"><span class="sg-note__content">On vérifie la présence du tableau</span></div>
-                <div class="sg-note fragment fade-in-then-out" style="top: 245px"><span class="sg-note__content">On vérifie les entêtes</span></div>
-                <div class="sg-note fragment fade-in-then-out" style="top: 268.5px"><span class="sg-note__content">On vérifie le contenu</span></div>
-              </div><code class="gherkin sg-code js-code" data-trim="data-trim" data-line-numbers="2-7,10-17" data-ln-start-from="">Given Je suis un utilisateur connu et connecté avec le profil &quot;&lt;profil&gt;&quot;
+                <div class="sg-note fragment fade-in-then-out" style="top: 245px"><span class="sg-note__content">On vérifie les entêtes du tableau</span></div>
+                <div class="sg-note fragment fade-in-then-out" style="top: 268.5px"><span class="sg-note__content">On vérifie le contenu du tableau</span></div>
+              </div><code class="gherkin sg-code  sg-code--no-max-height js-code  js-code--no-max-height" data-trim="data-trim" data-line-numbers="2-7,10-17" data-ln-start-from="">Given Je suis un utilisateur connu et connecté avec le profil &quot;&lt;profil&gt;&quot;
 And la page reçoit les données suivantes
   | _id | firstname | lastname | birthDate           | photo                                        | entity    | manager | managerId |
   | 1   | Samuel    | Gomez    | 1983-10-20T00:00:00 | https://randomuser.me/portraits/men/34.jpg   | BIOSPAN   | Sophie  | 4         |
@@ -917,9 +928,9 @@ And le tableau contient 4 lignes avec 4 colonnes dans l'ordre suivant :
           </section>
           <section class="sg-exo1-cucumber-5" id="exo1-cucumber-5" data-background="" data-background-transition="fade" data-auto-animate="data-auto-animate">           
             <h2>Modifier le fichier de test</h2>
-            <pre>                 <code class="language-javascript sg-code js-code" data-trim="data-trim" data-ln-start-from="">npm t People.spec.tsx</code>
-              <textarea class="sg-code-input">npm t People.spec.tsx</textarea></pre><span class="file">src/page/People/__tests__/People.spec.tsx</span>
-            <pre data-id="code-animation"> <code class="language-javascript sg-code js-code" data-trim="data-trim" data-line-numbers="2,6, 12-14" data-ln-start-from="">test('Affichage de la page People', ({ given, when, then, and }) =&gt; {
+            <pre>                 <code class="language-javascript sg-code  sg-code--no-max-height js-code  js-code--no-max-height" data-trim="data-trim" data-ln-start-from="">npm t People.spec.tsx</code>
+              <textarea class="sg-code-input">npm t People.spec.tsx</textarea></pre><span class="file">src/pages/People/__tests__/People.spec.tsx</span>
+            <pre data-id="code-animation"> <code class="language-javascript sg-code  sg-code--no-max-height js-code  js-code--no-max-height" data-trim="data-trim" data-line-numbers="1,5, 11-13" data-ln-start-from="">test('Affichage de la page People', ({ given, when, then, and }) =&gt; {
   JeSuisUnUtilisateurConnuEtConnecteAvecleProfil(given, (roleMock: string) =&gt; {
     role = roleMock;
   });
@@ -928,7 +939,7 @@ And le tableau contient 4 lignes avec 4 colonnes dans l'ordre suivant :
     render(&lt;People /&gt;, {}, { role });
     expect(await screen.findByText('Samuel Gomez')).toBeInTheDocument();
   });
-  UnTitreEstVisible(then);
+  UnTitreEstVisible(then,2);
   and('la page contient un tableau répertoriant la liste des gens', () =&gt; {});
   and(/^le tableau présente des entêtes de colonnes dans l’ordre suivant : &quot;(.*)&quot;, &quot;(.*)&quot;, &quot;(.*)&quot;, &quot;(.*)&quot;$/, (arg0, arg1, arg2, arg3) =&gt; {});
   and(/^le tableau contient (\d+) lignes avec (\d+) colonnes dans l'ordre suivant :$/, (arg0, arg1, table) =&gt; {});
@@ -942,7 +953,7 @@ And le tableau contient 4 lignes avec 4 colonnes dans l'ordre suivant :
     render(&lt;People /&gt;, {}, { role });
     expect(await screen.findByText('Samuel Gomez')).toBeInTheDocument();
   });
-  UnTitreEstVisible(then);
+  UnTitreEstVisible(then,2);
   and('la page contient un tableau répertoriant la liste des gens', () =&gt; {});
   and(/^le tableau présente des entêtes de colonnes dans l’ordre suivant : &quot;(.*)&quot;, &quot;(.*)&quot;, &quot;(.*)&quot;, &quot;(.*)&quot;$/, (arg0, arg1, arg2, arg3) =&gt; {});
   and(/^le tableau contient (\d+) lignes avec (\d+) colonnes dans l'ordre suivant :$/, (arg0, arg1, table) =&gt; {});
@@ -952,9 +963,21 @@ And le tableau contient 4 lignes avec 4 colonnes dans l'ordre suivant :
             <h2>Utiliser les scénarios type</h2><span class="file">Feature/People/People.spec.tsx</span>
             <pre class="code-wrapper--notes" data-id="code-animation"> 
               <div class="sg-notes">
-                <div class="sg-note fragment fade-in-then-out" style="top: 57px"><span class="sg-note__content">La méthode <i>serverUseGet</i> permet de passer les données provenant du gherkin comme réponse renvoyée sur un endpoint d'API (cf fichier msw.ts)</span></div>
-                <div class="sg-note fragment fade-in-then-out" style="top: 151px"><span class="sg-note__content">Ensuite, on remplace les scénarios générés par les scénarios type</span></div>
-              </div><code class="language-javascript sg-code js-code" data-trim="data-trim" data-line-numbers="2-4, 6-16" data-ln-start-from="">...
+                <div class="sg-note fragment fade-in-then-out" style="top: 80.5px"><span class="sg-note__content">On importe les scénarios type</span></div>
+                <div class="sg-note fragment fade-in-then-out" style="top: 198px"><span class="sg-note__content">On importe <i>serverUseGet</i> qui permet de mocker les appels réseaux en GET via MSW</span></div>
+                <div class="sg-note fragment fade-in-then-out" style="top: 315.5px"><span class="sg-note__content">On passe les données du guerkin à la méthode <i>serverUseGet</i> (le typage sera fait après)</span></div>
+                <div class="sg-note fragment fade-in-then-out" style="top: 386px"><span class="sg-note__content">Ensuite, on remplace les scénarios générés par les scénarios type</span></div>
+              </div><code class="language-javascript sg-code  sg-code--no-max-height js-code  js-code--no-max-height" data-trim="data-trim" data-line-numbers="4-6,9, 12-15, 17-27" data-ln-start-from="">...
+import {
+  JeSuisUnUtilisateurConnuEtConnecteAvecleProfil,
+  LaPageContientUnTableau,
+  LeTableauContientLesLignesCorrespondantAuxDonneesRecues,
+  LeTableauPresenteDesEntetesDeColonnesDansLOrdreSuivant,
+  UnTitreEstVisible,
+} from 'shared/testsUtils/sharedScenarios';
+import { serverUseGet } from 'shared/testsUtils/msw';
+import People from '..';
+  ...
   const tableAriaLabel = 'Tableau des gens';
   and('la page reçoit les données suivantes', responseBody =&gt; {
     serverUseGet&lt;TPeopleData[]&gt;({ route: 'people', responseBody }); // le typage sera fait juste après
@@ -972,6 +995,16 @@ And le tableau contient 4 lignes avec 4 colonnes dans l'ordre suivant :
     tableAriaLabel,
   );</code>
               <textarea class="sg-code-input">...
+import {
+  JeSuisUnUtilisateurConnuEtConnecteAvecleProfil,
+  LaPageContientUnTableau,
+  LeTableauContientLesLignesCorrespondantAuxDonneesRecues,
+  LeTableauPresenteDesEntetesDeColonnesDansLOrdreSuivant,
+  UnTitreEstVisible,
+} from 'shared/testsUtils/sharedScenarios';
+import { serverUseGet } from 'shared/testsUtils/msw';
+import People from '..';
+  ...
   const tableAriaLabel = 'Tableau des gens';
   and('la page reçoit les données suivantes', responseBody =&gt; {
     serverUseGet&lt;TPeopleData[]&gt;({ route: 'people', responseBody }); // le typage sera fait juste après
@@ -989,8 +1022,26 @@ And le tableau contient 4 lignes avec 4 colonnes dans l'ordre suivant :
     tableAriaLabel,
   );</textarea></pre>
           </section>
-          <section class="sg-exo1-cucumber-7" id="exo1-cucumber-7" data-background="" data-background-transition="fade" data-auto-animate="data-auto-animate">          
-            <h2>Ajouter les headers</h2><span class="file">src/page/People/constants.ts </span>
+          <section class="sg-exo1-api-url" id="exo1-api-url" data-background="" data-background-transition="fade" data-auto-animate="data-auto-animate">          
+            <h2>Définir l'url d'API</h2><span class="file">Avant de démarrer les développements, nous avons besoin de configurer notre url d'API</span><br><span class="file">Ajouter l'url d'API dans le fichier /public/environment.development.json</span>
+            <pre class="code-wrapper--notes" data-id="code-animation">
+              <div class="sg-notes">
+                <div class="sg-note fragment fade-in-then-out" style="top: 80.5px"><span class="sg-note__content">apiUrl est sous forme d'objet pour permettre d'avoir plusieurs sources d'API</span></div>
+              </div><code class="language-javascript sg-code js-code" data-trim="data-trim" data-line-numbers="4" data-ln-start-from="">...
+{
+  &quot;apiUrl&quot;: {
+    &quot;base&quot;: &quot;https://react-starter-api.vercel.app/api/&quot;
+  },
+  &quot;baseUrl&quot;: &quot;&quot;,</code>
+              <textarea class="sg-code-input">...
+{
+  &quot;apiUrl&quot;: {
+    &quot;base&quot;: &quot;https://react-starter-api.vercel.app/api/&quot;
+  },
+  &quot;baseUrl&quot;: &quot;&quot;,</textarea></pre>
+          </section>
+          <section class="sg-exo1-table-headers" id="exo1-table-headers" data-background="" data-background-transition="fade" data-auto-animate="data-auto-animate">          
+            <h2>Ajouter les headers</h2><span class="file">On créé des constantes pour les entêtes de tableau et le endpoint d'API</span><br><span class="file">src/pages/People/constants.ts</span>
             <pre class="code-wrapper--notes" data-id="code-animation"> 
               <div class="sg-notes">
                 <div class="sg-note fragment fade-in-then-out" style="top: 80.5px"><span class="sg-note__content">on créé une constante pour le nom du service</span></div>
@@ -1022,7 +1073,7 @@ export const TABLE_HEADERS_PEOPLE = [
 ];</textarea></pre>
           </section>
           <section class="sg-exo1-donnees-typage" id="exo1-donnees-typage" data-background="" data-background-transition="fade" data-auto-animate="data-auto-animate">           
-            <h2>Typer les données</h2><span class="file">src/page/People/People.tsx : typage</span>
+            <h2>Typer les données</h2><span class="file">src/pages/People/People.tsx : typage </span>
             <pre data-id="code-animation"> <code class="language-javascript sg-code js-code" data-trim="data-trim" data-line-numbers="" data-ln-start-from="">export type TPeopleData = Record&lt;string, string&gt;;
       
 export type TPeopleDataResponse = {
@@ -1033,37 +1084,40 @@ export type TPeopleDataResponse = {
 export type TPeopleDataResponse = {
   responseBody: TPeopleData[];
 };</textarea></pre>
-          </section>
-          <section class="sg-exo1-api-url" id="exo1-api-url" data-background="" data-background-transition="fade" data-auto-animate="data-auto-animate">          
-            <h2>Définir l'url d'API</h2><span class="file">Ajouter l'url d'API dans le fichier /public/environment.development.json</span>
-            <pre class="code-wrapper--notes" data-id="code-animation">
-              <div class="sg-notes">
-                <div class="sg-note fragment fade-in-then-out" style="top: 80.5px"><span class="sg-note__content">apiUrl est sous forme d'objet pour permettre d'avoir plusieurs sources d'API</span></div>
-              </div><code class="language-javascript sg-code js-code" data-trim="data-trim" data-line-numbers="4" data-ln-start-from="">...
-{
-  &quot;apiUrl&quot;: {
-    &quot;base&quot;: &quot;https://react-starter-api.vercel.app/api/&quot;
-  },
-  &quot;baseUrl&quot;: &quot;&quot;,</code>
-              <textarea class="sg-code-input">...
-{
-  &quot;apiUrl&quot;: {
-    &quot;base&quot;: &quot;https://react-starter-api.vercel.app/api/&quot;
-  },
-  &quot;baseUrl&quot;: &quot;&quot;,</textarea></pre>
-          </section>
-          <section class="sg-exo1-cucumber-8" id="exo1-cucumber-8" data-background="" data-background-transition="fade" data-auto-animate="data-auto-animate">          
-            <h2>Récupération des données            </h2><span class="file">src/page/People/People.tsx : <em>usePeople</em></span>
-            <div class="sg-alert  sg-alert--success" role="alert">
+            <div class="sg-alert  sg-alert--warning" role="alert">
               <svg class="sg-svg" id="info-icon" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                 <path fill-rule="evenodd" d="M22 12a10 10 0 1 1-20 0 10 10 0 0 1 20 0Zm-10 5.75c.41 0 .75-.34.75-.75v-6a.75.75 0 0 0-1.5 0v6c0 .41.34.75.75.75ZM12 7a1 1 0 1 1 0 2 1 1 0 0 1 0-2Z" clip-rule="evenodd"></path>
-              </svg><span class="sg-alert__content"><strong>Remarque : </strong>useQuery retourne <strong>isLoading </strong>pour l'état de chargement du cache ou <strong>isFecthing </strong>pour l'état du fetch.<br>Par défaut, React Query affiche les données du cache et effectue en parallèle un appel fetch pour rafraichir les données.<br>Si on souhaite afficher le loader tant que le fetch n'est pas terminé, il faut utiliser isFetching<br>On peut également limiter le rafraichissement des données avec l'option <strong>staleTime </strong></span>
+              </svg><span class="sg-alert__content">N'oubliez pas d'importer le type dans le fichier de test.  </span>
             </div>
+          </section>
+          <section class="sg-exo1-use-people" id="exo1-use-people" data-background="" data-background-transition="fade" data-auto-animate="data-auto-animate">          
+            <!--+Alert({ modifier: 'success'})
+            strong Remarque : 
+            | useQuery retourne 
+            strong isLoading 
+            | pour l'état de chargement du cache ou 
+            strong isFecthing 
+            | pour l'état du fetch.
+            br 
+            | Par défaut, React Query affiche les données du cache et effectue en parallèle un appel fetch pour rafraichir les données.
+            br 
+            | Si on souhaite afficher le loader tant que le fetch n'est pas terminé, il faut utiliser isFetching
+            br
+            | On peut également limiter le rafraichissement des données avec l'option 
+            strong staleTime 
+            -->
+            <h2>Récupération des données            </h2><span class="file">src/pages/People/People.tsx : <em>usePeople</em></span>
             <div class="r-stack">
               <pre class="code-wrapper--notes fragment fade-in-then-out"> 
                 <div class="sg-notes">
-                  <div class="sg-note" style="top: 10px"><span class="sg-note__content">On créé un hook custom pour effectuer l'appel avec React Query</span></div>
-                </div><code class="language-javascript sg-code js-code" data-trim="data-trim" data-line-numbers="1" data-ln-start-from="">export const usePeople = () =&gt; {
+                  <div class="sg-note" style="top: 10px"><span class="sg-note__content">On importe useQuery de React Query, setAnomalyEmptyItems, Tanomaly et nos constantes</span></div>
+                </div><code class="language-javascript sg-code  sg-code--no-max-height js-code  js-code--no-max-height" data-trim="data-trim" data-line-numbers="1,3-5" data-ln-start-from="">import { useQuery } from '@tanstack/react-query';
+import Layout, { type TLayoutPage } from 'Layout';
+import { setAnomalyEmptyItems } from 'shared/helpers';
+import { type Tanomaly } from 'shared/types';
+import { ENDPOINT, SERVICE_NAME, TITLE, TITLE_BAR } from './constants';
+
+export const usePeople = () =&gt; {
   const { data, isLoading, error, refetch } = useQuery({
     queryKey: [ENDPOINT],
     select: ({ responseBody }: TPeopleDataResponse) =&gt; ({
@@ -1081,7 +1135,13 @@ export type TPeopleDataResponse = {
 };
 
 export type TReturnUsePeople = ReturnType&lt;typeof usePeople&gt;;</code>
-                <textarea class="sg-code-input">export const usePeople = () =&gt; {
+                <textarea class="sg-code-input">import { useQuery } from '@tanstack/react-query';
+import Layout, { type TLayoutPage } from 'Layout';
+import { setAnomalyEmptyItems } from 'shared/helpers';
+import { type Tanomaly } from 'shared/types';
+import { ENDPOINT, SERVICE_NAME, TITLE, TITLE_BAR } from './constants';
+
+export const usePeople = () =&gt; {
   const { data, isLoading, error, refetch } = useQuery({
     queryKey: [ENDPOINT],
     select: ({ responseBody }: TPeopleDataResponse) =&gt; ({
@@ -1101,8 +1161,14 @@ export type TReturnUsePeople = ReturnType&lt;typeof usePeople&gt;;</code>
 export type TReturnUsePeople = ReturnType&lt;typeof usePeople&gt;;</textarea></pre>
               <pre class="code-wrapper--notes fragment fade-in-then-out"> 
                 <div class="sg-notes">
-                  <div class="sg-note" style="top: 33.5px"><span class="sg-note__content">On passe la route au useQuery, il nous retourne les données, l'état du fetch, l'état de l'erreur, et une méthode refetch</span></div>
-                </div><code class="language-javascript sg-code js-code" data-trim="data-trim" data-line-numbers="2-3" data-ln-start-from="">export const usePeople = () =&gt; {
+                  <div class="sg-note" style="top: 151px"><span class="sg-note__content">On créé un hook custom pour effectuer l'appel avec React Query</span></div>
+                </div><code class="language-javascript sg-code  sg-code--no-max-height js-code  js-code--no-max-height" data-trim="data-trim" data-line-numbers="7" data-ln-start-from="">import { useQuery } from '@tanstack/react-query';
+import Layout, { type TLayoutPage } from 'Layout';
+import { setAnomalyEmptyItems } from 'shared/helpers';
+import { type Tanomaly } from 'shared/types';
+import { ENDPOINT, SERVICE_NAME, TITLE, TITLE_BAR } from './constants';
+
+export const usePeople = () =&gt; {
   const { data, isLoading, error, refetch } = useQuery({
     queryKey: [ENDPOINT],
     select: ({ responseBody }: TPeopleDataResponse) =&gt; ({
@@ -1120,7 +1186,64 @@ export type TReturnUsePeople = ReturnType&lt;typeof usePeople&gt;;</textarea></p
 };
 
 export type TReturnUsePeople = ReturnType&lt;typeof usePeople&gt;;</code>
-                <textarea class="sg-code-input">export const usePeople = () =&gt; {
+                <textarea class="sg-code-input">import { useQuery } from '@tanstack/react-query';
+import Layout, { type TLayoutPage } from 'Layout';
+import { setAnomalyEmptyItems } from 'shared/helpers';
+import { type Tanomaly } from 'shared/types';
+import { ENDPOINT, SERVICE_NAME, TITLE, TITLE_BAR } from './constants';
+
+export const usePeople = () =&gt; {
+  const { data, isLoading, error, refetch } = useQuery({
+    queryKey: [ENDPOINT],
+    select: ({ responseBody }: TPeopleDataResponse) =&gt; ({
+      anomaly: setAnomalyEmptyItems(responseBody),
+      [SERVICE_NAME]: computeInfos(responseBody),
+    }),
+  });
+
+  return {
+    ...data,
+    anomaly: (error || data?.anomaly) as Tanomaly | null,
+    isLoading,
+    refetch,
+  };
+};
+
+export type TReturnUsePeople = ReturnType&lt;typeof usePeople&gt;;</textarea></pre>
+              <pre class="code-wrapper--notes fragment fade-in-then-out"> 
+                <div class="sg-notes">
+                  <div class="sg-note" style="top: 174.5px"><span class="sg-note__content">On passe la route au useQuery, il nous retourne les données, l'état du fetch, l'état de l'erreur, et une méthode refetch</span></div>
+                </div><code class="language-javascript sg-code  sg-code--no-max-height js-code  js-code--no-max-height" data-trim="data-trim" data-line-numbers="8-9" data-ln-start-from="">import { useQuery } from '@tanstack/react-query';
+import Layout, { type TLayoutPage } from 'Layout';
+import { setAnomalyEmptyItems } from 'shared/helpers';
+import { type Tanomaly } from 'shared/types';
+import { ENDPOINT, SERVICE_NAME, TITLE, TITLE_BAR } from './constants';
+
+export const usePeople = () =&gt; {
+  const { data, isLoading, error, refetch } = useQuery({
+    queryKey: [ENDPOINT],
+    select: ({ responseBody }: TPeopleDataResponse) =&gt; ({
+      anomaly: setAnomalyEmptyItems(responseBody),
+      [SERVICE_NAME]: computeInfos(responseBody),
+    }),
+  });
+
+  return {
+    ...data,
+    anomaly: (error || data?.anomaly) as Tanomaly | null,
+    isLoading,
+    refetch,
+  };
+};
+
+export type TReturnUsePeople = ReturnType&lt;typeof usePeople&gt;;</code>
+                <textarea class="sg-code-input">import { useQuery } from '@tanstack/react-query';
+import Layout, { type TLayoutPage } from 'Layout';
+import { setAnomalyEmptyItems } from 'shared/helpers';
+import { type Tanomaly } from 'shared/types';
+import { ENDPOINT, SERVICE_NAME, TITLE, TITLE_BAR } from './constants';
+
+export const usePeople = () =&gt; {
   const { data, isLoading, error, refetch } = useQuery({
     queryKey: [ENDPOINT],
     select: ({ responseBody }: TPeopleDataResponse) =&gt; ({
@@ -1140,8 +1263,14 @@ export type TReturnUsePeople = ReturnType&lt;typeof usePeople&gt;;</code>
 export type TReturnUsePeople = ReturnType&lt;typeof usePeople&gt;;</textarea></pre>
               <pre class="fragment fade-in-then-out"> 
                 <div class="sg-notes">
-                  <div class="sg-note" style="top: 57px"><span class="sg-note__content">En second paramètre, sur la propriété select, on peut passer une fonction qui s'exécutera après avoir reçu les données pour effectuer des traitements</span></div>
-                </div><code class="language-javascript sg-code js-code" data-trim="data-trim" data-line-numbers="4-6" data-ln-start-from="">export const usePeople = () =&gt; {
+                  <div class="sg-note" style="top: 221.5px"><span class="sg-note__content">En second paramètre, sur la propriété select, on peut passer une fonction qui s'exécutera après avoir reçu les données pour effectuer des traitements</span></div>
+                </div><code class="language-javascript sg-code  sg-code--no-max-height js-code  js-code--no-max-height" data-trim="data-trim" data-line-numbers="10-13" data-ln-start-from="">import { useQuery } from '@tanstack/react-query';
+import Layout, { type TLayoutPage } from 'Layout';
+import { setAnomalyEmptyItems } from 'shared/helpers';
+import { type Tanomaly } from 'shared/types';
+import { ENDPOINT, SERVICE_NAME, TITLE, TITLE_BAR } from './constants';
+
+export const usePeople = () =&gt; {
   const { data, isLoading, error, refetch } = useQuery({
     queryKey: [ENDPOINT],
     select: ({ responseBody }: TPeopleDataResponse) =&gt; ({
@@ -1159,7 +1288,13 @@ export type TReturnUsePeople = ReturnType&lt;typeof usePeople&gt;;</textarea></p
 };
 
 export type TReturnUsePeople = ReturnType&lt;typeof usePeople&gt;;</code>
-                <textarea class="sg-code-input">export const usePeople = () =&gt; {
+                <textarea class="sg-code-input">import { useQuery } from '@tanstack/react-query';
+import Layout, { type TLayoutPage } from 'Layout';
+import { setAnomalyEmptyItems } from 'shared/helpers';
+import { type Tanomaly } from 'shared/types';
+import { ENDPOINT, SERVICE_NAME, TITLE, TITLE_BAR } from './constants';
+
+export const usePeople = () =&gt; {
   const { data, isLoading, error, refetch } = useQuery({
     queryKey: [ENDPOINT],
     select: ({ responseBody }: TPeopleDataResponse) =&gt; ({
@@ -1178,12 +1313,18 @@ export type TReturnUsePeople = ReturnType&lt;typeof usePeople&gt;;</code>
 
 export type TReturnUsePeople = ReturnType&lt;typeof usePeople&gt;;</textarea>
                 <div class="sg-notes  sg-notes--right">
-                  <div class="sg-note" style="top: 80.5px"><span class="sg-note__content">ici, on renvoie un objet contenant l'anomalie en cas de réponse à vide et les données formatées en cas de données non vides</span></div>
+                  <div class="sg-note" style="top: 221.5px"><span class="sg-note__content">ici, on renvoie un objet contenant l'anomalie en cas de réponse à vide et les données formatées en cas de données non vides</span></div>
                 </div></pre>
               <pre class="fragment fade-in-then-out"> 
                 <div class="sg-notes">
-                  <div class="sg-note" style="top: 104px"><span class="sg-note__content"><i>setAnomalyEmptyItems</i> est une fonction utilitaire qui va renvoyer un objet dans l'anomalie qui affichera une alert</span></div>
-                </div><code class="language-javascript sg-code js-code" data-trim="data-trim" data-line-numbers="5,6" data-ln-start-from="">export const usePeople = () =&gt; {
+                  <div class="sg-note" style="top: 221.5px"><span class="sg-note__content"><i>setAnomalyEmptyItems</i> est une fonction utilitaire qui va renvoyer un objet dans l'anomalie qui affichera une alert</span></div>
+                </div><code class="language-javascript sg-code  sg-code--no-max-height js-code  js-code--no-max-height" data-trim="data-trim" data-line-numbers="11-12" data-ln-start-from="">import { useQuery } from '@tanstack/react-query';
+import Layout, { type TLayoutPage } from 'Layout';
+import { setAnomalyEmptyItems } from 'shared/helpers';
+import { type Tanomaly } from 'shared/types';
+import { ENDPOINT, SERVICE_NAME, TITLE, TITLE_BAR } from './constants';
+
+export const usePeople = () =&gt; {
   const { data, isLoading, error, refetch } = useQuery({
     queryKey: [ENDPOINT],
     select: ({ responseBody }: TPeopleDataResponse) =&gt; ({
@@ -1201,7 +1342,13 @@ export type TReturnUsePeople = ReturnType&lt;typeof usePeople&gt;;</textarea>
 };
 
 export type TReturnUsePeople = ReturnType&lt;typeof usePeople&gt;;</code>
-                <textarea class="sg-code-input">export const usePeople = () =&gt; {
+                <textarea class="sg-code-input">import { useQuery } from '@tanstack/react-query';
+import Layout, { type TLayoutPage } from 'Layout';
+import { setAnomalyEmptyItems } from 'shared/helpers';
+import { type Tanomaly } from 'shared/types';
+import { ENDPOINT, SERVICE_NAME, TITLE, TITLE_BAR } from './constants';
+
+export const usePeople = () =&gt; {
   const { data, isLoading, error, refetch } = useQuery({
     queryKey: [ENDPOINT],
     select: ({ responseBody }: TPeopleDataResponse) =&gt; ({
@@ -1220,12 +1367,18 @@ export type TReturnUsePeople = ReturnType&lt;typeof usePeople&gt;;</code>
 
 export type TReturnUsePeople = ReturnType&lt;typeof usePeople&gt;;</textarea>
                 <div class="sg-notes  sg-notes--right">
-                  <div class="sg-note" style="top: 127.5px"><span class="sg-note__content"><i>computeInfos</i> est une fonction que l'on va créer pour respecter le format de données attendu par le tableau</span></div>
+                  <div class="sg-note" style="top: 245px"><span class="sg-note__content"><i>computeInfos</i> est une fonction que l'on va créer pour respecter le format de données attendu par le tableau</span></div>
                 </div></pre>
               <pre class="code-wrapper--notes fragment fade-in-then-out"> 
                 <div class="sg-notes">
-                  <div class="sg-note" style="top: 268.5px"><span class="sg-note__content">Enfin, on retourne les valeurs utiles à la vue</span></div>
-                </div><code class="language-javascript sg-code js-code" data-trim="data-trim" data-line-numbers="10-15" data-ln-start-from="">export const usePeople = () =&gt; {
+                  <div class="sg-note" style="top: 386px"><span class="sg-note__content">Enfin, on retourne les valeurs utiles à la vue</span></div>
+                </div><code class="language-javascript sg-code  sg-code--no-max-height js-code  js-code--no-max-height" data-trim="data-trim" data-line-numbers="16-22" data-ln-start-from="">import { useQuery } from '@tanstack/react-query';
+import Layout, { type TLayoutPage } from 'Layout';
+import { setAnomalyEmptyItems } from 'shared/helpers';
+import { type Tanomaly } from 'shared/types';
+import { ENDPOINT, SERVICE_NAME, TITLE, TITLE_BAR } from './constants';
+
+export const usePeople = () =&gt; {
   const { data, isLoading, error, refetch } = useQuery({
     queryKey: [ENDPOINT],
     select: ({ responseBody }: TPeopleDataResponse) =&gt; ({
@@ -1243,7 +1396,13 @@ export type TReturnUsePeople = ReturnType&lt;typeof usePeople&gt;;</textarea>
 };
 
 export type TReturnUsePeople = ReturnType&lt;typeof usePeople&gt;;</code>
-                <textarea class="sg-code-input">export const usePeople = () =&gt; {
+                <textarea class="sg-code-input">import { useQuery } from '@tanstack/react-query';
+import Layout, { type TLayoutPage } from 'Layout';
+import { setAnomalyEmptyItems } from 'shared/helpers';
+import { type Tanomaly } from 'shared/types';
+import { ENDPOINT, SERVICE_NAME, TITLE, TITLE_BAR } from './constants';
+
+export const usePeople = () =&gt; {
   const { data, isLoading, error, refetch } = useQuery({
     queryKey: [ENDPOINT],
     select: ({ responseBody }: TPeopleDataResponse) =&gt; ({
@@ -1264,12 +1423,16 @@ export type TReturnUsePeople = ReturnType&lt;typeof usePeople&gt;;</textarea></p
             </div>
           </section>
           <section class="sg-exo1-cucumber-9" id="exo1-cucumber-9" data-background="" data-background-transition="fade">          
-            <h2>Formatage des données </h2><span class="file">src/page/People/People.tsx : <em>computeInfos            </em></span>
+            <h2>Formatage des données </h2><span class="file">src/pages/People/People.tsx : <em>computeInfos            </em></span>
             <div class="r-stack">
               <pre class="code-wrapper--notes fragment fade-in-then-out"> 
                 <div class="sg-notes">
-                  <div class="sg-note" style="top: 10px"><span class="sg-note__content">On récupère les données</span></div>
-                </div><code class="language-javascript sg-code js-code" data-trim="data-trim" data-line-numbers="1" data-ln-start-from="">export const computeInfos = (data: TPeopleData[]) =&gt;
+                  <div class="sg-note" style="top: 33.5px"><span class="sg-note__content">On modifie les imports</span></div>
+                </div><code class="language-javascript sg-code js-code" data-trim="data-trim" data-line-numbers="2-3" data-ln-start-from="">...
+import { setAnomalyEmptyItems, setDate } from 'shared/helpers';
+import { setDisplay } from 'shared/components/Table';
+...
+export const computeInfos = (data: TPeopleData[]) =&gt;
 data?.map(({ _id, firstname, lastname, birthDate, entity }) =&gt; ({
   key: _id,
   cols: {
@@ -1279,7 +1442,11 @@ data?.map(({ _id, firstname, lastname, birthDate, entity }) =&gt; ({
     ...setDisplay({ entity }),
   },
 }));</code>
-                <textarea class="sg-code-input">export const computeInfos = (data: TPeopleData[]) =&gt;
+                <textarea class="sg-code-input">...
+import { setAnomalyEmptyItems, setDate } from 'shared/helpers';
+import { setDisplay } from 'shared/components/Table';
+...
+export const computeInfos = (data: TPeopleData[]) =&gt;
 data?.map(({ _id, firstname, lastname, birthDate, entity }) =&gt; ({
   key: _id,
   cols: {
@@ -1291,8 +1458,12 @@ data?.map(({ _id, firstname, lastname, birthDate, entity }) =&gt; ({
 }));</textarea></pre>
               <pre class="code-wrapper--notes fragment fade-in-then-out"> 
                 <div class="sg-notes">
-                  <div class="sg-note" style="top: 33.5px"><span class="sg-note__content">On boucle sur les données</span></div>
-                </div><code class="language-javascript sg-code js-code" data-trim="data-trim" data-line-numbers="2" data-ln-start-from="">export const computeInfos = (data: TPeopleData[]) =&gt;
+                  <div class="sg-note" style="top: 104px"><span class="sg-note__content">La fonction reçoit les données brutes</span></div>
+                </div><code class="language-javascript sg-code js-code" data-trim="data-trim" data-line-numbers="5" data-ln-start-from="">...
+import { setAnomalyEmptyItems, setDate } from 'shared/helpers';
+import { setDisplay } from 'shared/components/Table';
+...
+export const computeInfos = (data: TPeopleData[]) =&gt;
 data?.map(({ _id, firstname, lastname, birthDate, entity }) =&gt; ({
   key: _id,
   cols: {
@@ -1302,7 +1473,11 @@ data?.map(({ _id, firstname, lastname, birthDate, entity }) =&gt; ({
     ...setDisplay({ entity }),
   },
 }));</code>
-                <textarea class="sg-code-input">export const computeInfos = (data: TPeopleData[]) =&gt;
+                <textarea class="sg-code-input">...
+import { setAnomalyEmptyItems, setDate } from 'shared/helpers';
+import { setDisplay } from 'shared/components/Table';
+...
+export const computeInfos = (data: TPeopleData[]) =&gt;
 data?.map(({ _id, firstname, lastname, birthDate, entity }) =&gt; ({
   key: _id,
   cols: {
@@ -1314,8 +1489,12 @@ data?.map(({ _id, firstname, lastname, birthDate, entity }) =&gt; ({
 }));</textarea></pre>
               <pre class="code-wrapper--notes fragment fade-in-then-out"> 
                 <div class="sg-notes">
-                  <div class="sg-note" style="top: 57px"><span class="sg-note__content">Pour chaque item, on renvoie les données formatées</span></div>
-                </div><code class="language-javascript sg-code js-code" data-trim="data-trim" data-line-numbers="3-9" data-ln-start-from="">export const computeInfos = (data: TPeopleData[]) =&gt;
+                  <div class="sg-note" style="top: 127.5px"><span class="sg-note__content">On boucle sur les données</span></div>
+                </div><code class="language-javascript sg-code js-code" data-trim="data-trim" data-line-numbers="6" data-ln-start-from="">...
+import { setAnomalyEmptyItems, setDate } from 'shared/helpers';
+import { setDisplay } from 'shared/components/Table';
+...
+export const computeInfos = (data: TPeopleData[]) =&gt;
 data?.map(({ _id, firstname, lastname, birthDate, entity }) =&gt; ({
   key: _id,
   cols: {
@@ -1325,7 +1504,11 @@ data?.map(({ _id, firstname, lastname, birthDate, entity }) =&gt; ({
     ...setDisplay({ entity }),
   },
 }));</code>
-                <textarea class="sg-code-input">export const computeInfos = (data: TPeopleData[]) =&gt;
+                <textarea class="sg-code-input">...
+import { setAnomalyEmptyItems, setDate } from 'shared/helpers';
+import { setDisplay } from 'shared/components/Table';
+...
+export const computeInfos = (data: TPeopleData[]) =&gt;
 data?.map(({ _id, firstname, lastname, birthDate, entity }) =&gt; ({
   key: _id,
   cols: {
@@ -1337,8 +1520,12 @@ data?.map(({ _id, firstname, lastname, birthDate, entity }) =&gt; ({
 }));</textarea></pre>
               <pre class="code-wrapper--notes fragment fade-in-then-out"> 
                 <div class="sg-notes">
-                  <div class="sg-note" style="top: 104px"><span class="sg-note__content">La méthode <em>setDisplay</em> formate les données pour chaque cellule du tableau</span></div>
-                </div><code class="language-javascript sg-code js-code" data-trim="data-trim" data-line-numbers="5-8" data-ln-start-from="">export const computeInfos = (data: TPeopleData[]) =&gt;
+                  <div class="sg-note" style="top: 151px"><span class="sg-note__content">Pour chaque item, on renvoie les données formatées</span></div>
+                </div><code class="language-javascript sg-code js-code" data-trim="data-trim" data-line-numbers="7-13" data-ln-start-from="">...
+import { setAnomalyEmptyItems, setDate } from 'shared/helpers';
+import { setDisplay } from 'shared/components/Table';
+...
+export const computeInfos = (data: TPeopleData[]) =&gt;
 data?.map(({ _id, firstname, lastname, birthDate, entity }) =&gt; ({
   key: _id,
   cols: {
@@ -1348,7 +1535,42 @@ data?.map(({ _id, firstname, lastname, birthDate, entity }) =&gt; ({
     ...setDisplay({ entity }),
   },
 }));</code>
-                <textarea class="sg-code-input">export const computeInfos = (data: TPeopleData[]) =&gt;
+                <textarea class="sg-code-input">...
+import { setAnomalyEmptyItems, setDate } from 'shared/helpers';
+import { setDisplay } from 'shared/components/Table';
+...
+export const computeInfos = (data: TPeopleData[]) =&gt;
+data?.map(({ _id, firstname, lastname, birthDate, entity }) =&gt; ({
+  key: _id,
+  cols: {
+    ...setDisplay({ firstname }),
+    ...setDisplay({ lastname }),
+    ...setDisplay({ birthDate: setDate({ date: birthDate }) }),
+    ...setDisplay({ entity }),
+  },
+}));</textarea></pre>
+              <pre class="code-wrapper--notes fragment fade-in-then-out"> 
+                <div class="sg-notes">
+                  <div class="sg-note" style="top: 198px"><span class="sg-note__content">La méthode <em>setDisplay</em> formate les données pour chaque cellule du tableau</span></div>
+                </div><code class="language-javascript sg-code js-code" data-trim="data-trim" data-line-numbers="9-12" data-ln-start-from="">...
+import { setAnomalyEmptyItems, setDate } from 'shared/helpers';
+import { setDisplay } from 'shared/components/Table';
+...
+export const computeInfos = (data: TPeopleData[]) =&gt;
+data?.map(({ _id, firstname, lastname, birthDate, entity }) =&gt; ({
+  key: _id,
+  cols: {
+    ...setDisplay({ firstname }),
+    ...setDisplay({ lastname }),
+    ...setDisplay({ birthDate: setDate({ date: birthDate }) }),
+    ...setDisplay({ entity }),
+  },
+}));</code>
+                <textarea class="sg-code-input">...
+import { setAnomalyEmptyItems, setDate } from 'shared/helpers';
+import { setDisplay } from 'shared/components/Table';
+...
+export const computeInfos = (data: TPeopleData[]) =&gt;
 data?.map(({ _id, firstname, lastname, birthDate, entity }) =&gt; ({
   key: _id,
   cols: {
@@ -1378,18 +1600,29 @@ data?.map(({ _id, firstname, lastname, birthDate, entity }) =&gt; ({
     },</textarea></pre>
           </section>
           <section class="sg-exo1-cucumber-10" id="exo1-cucumber-10" data-background="" data-background-transition="fade">          
-            <h2>Passage des données à la vue</h2><span class="file">src/page/People/People.tsx : PeopleContainer </span>
+            <h2>Passage des données à la vue</h2><span class="file">src/pages/People/People.tsx : PeopleContainer</span><br>
+            <div class="sg-alert  sg-alert--success" role="alert">
+              <svg class="sg-svg" id="info-icon" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path fill-rule="evenodd" d="M22 12a10 10 0 1 1-20 0 10 10 0 0 1 20 0Zm-10 5.75c.41 0 .75-.34.75-.75v-6a.75.75 0 0 0-1.5 0v6c0 .41.34.75.75.75ZM12 7a1 1 0 1 1 0 2 1 1 0 0 1 0-2Z" clip-rule="evenodd"></path>
+              </svg><span class="sg-alert__content">Dans la cadre de ce dojo, on place tout notre code dans le même fichier, libre à vous de faire du découpage.</span>
+            </div>
             <div class="r-stack">
               <pre class="code-wrapper--notes fragment fade-in-then-out"> 
                 <div class="sg-notes">
-                  <div class="sg-note" style="top: 10px"><span class="sg-note__content">On déclare un nouveau composant</span></div>
-                </div><code class="language-javascript sg-code js-code" data-trim="data-trim" data-line-numbers="1" data-ln-start-from="">const PeopleContainer = () =&gt; {
+                  <div class="sg-note" style="top: 33.5px"><span class="sg-note__content">On importe la fonction setLoaderMode</span></div>
+                </div><code class="language-javascript sg-code js-code" data-trim="data-trim" data-line-numbers="2" data-ln-start-from="">...
+import { setLoaderMode } from 'shared/components/Loader';
+...
+const PeopleContainer = () =&gt; {
   const { anomaly, isLoading, people, refetch } = usePeople();
   return &lt;People people={people} loaderMode={setLoaderMode({ isLoading })} refetch={refetch} anomaly={anomaly} /&gt;;
 };
 
 export default PeopleContainer;</code>
-                <textarea class="sg-code-input">const PeopleContainer = () =&gt; {
+                <textarea class="sg-code-input">...
+import { setLoaderMode } from 'shared/components/Loader';
+...
+const PeopleContainer = () =&gt; {
   const { anomaly, isLoading, people, refetch } = usePeople();
   return &lt;People people={people} loaderMode={setLoaderMode({ isLoading })} refetch={refetch} anomaly={anomaly} /&gt;;
 };
@@ -1397,14 +1630,20 @@ export default PeopleContainer;</code>
 export default PeopleContainer;</textarea></pre>
               <pre class="code-wrapper--notes fragment fade-in-then-out"> 
                 <div class="sg-notes">
-                  <div class="sg-note" style="top: 33.5px"><span class="sg-note__content">On récupère les données via notre hook custom</span></div>
-                </div><code class="language-javascript sg-code js-code" data-trim="data-trim" data-line-numbers="2" data-ln-start-from="">const PeopleContainer = () =&gt; {
+                  <div class="sg-note" style="top: 80.5px"><span class="sg-note__content">On déclare un nouveau composant</span></div>
+                </div><code class="language-javascript sg-code js-code" data-trim="data-trim" data-line-numbers="4" data-ln-start-from="">...
+import { setLoaderMode } from 'shared/components/Loader';
+...
+const PeopleContainer = () =&gt; {
   const { anomaly, isLoading, people, refetch } = usePeople();
   return &lt;People people={people} loaderMode={setLoaderMode({ isLoading })} refetch={refetch} anomaly={anomaly} /&gt;;
 };
 
 export default PeopleContainer;</code>
-                <textarea class="sg-code-input">const PeopleContainer = () =&gt; {
+                <textarea class="sg-code-input">...
+import { setLoaderMode } from 'shared/components/Loader';
+...
+const PeopleContainer = () =&gt; {
   const { anomaly, isLoading, people, refetch } = usePeople();
   return &lt;People people={people} loaderMode={setLoaderMode({ isLoading })} refetch={refetch} anomaly={anomaly} /&gt;;
 };
@@ -1412,14 +1651,20 @@ export default PeopleContainer;</code>
 export default PeopleContainer;</textarea></pre>
               <pre class="code-wrapper--notes fragment fade-in-then-out"> 
                 <div class="sg-notes">
-                  <div class="sg-note" style="top: 57px"><span class="sg-note__content">On les passe à la vue</span></div>
-                </div><code class="language-javascript sg-code js-code" data-trim="data-trim" data-line-numbers="3" data-ln-start-from="">const PeopleContainer = () =&gt; {
+                  <div class="sg-note" style="top: 104px"><span class="sg-note__content">On récupère les données via notre hook custom</span></div>
+                </div><code class="language-javascript sg-code js-code" data-trim="data-trim" data-line-numbers="5" data-ln-start-from="">...
+import { setLoaderMode } from 'shared/components/Loader';
+...
+const PeopleContainer = () =&gt; {
   const { anomaly, isLoading, people, refetch } = usePeople();
   return &lt;People people={people} loaderMode={setLoaderMode({ isLoading })} refetch={refetch} anomaly={anomaly} /&gt;;
 };
 
 export default PeopleContainer;</code>
-                <textarea class="sg-code-input">const PeopleContainer = () =&gt; {
+                <textarea class="sg-code-input">...
+import { setLoaderMode } from 'shared/components/Loader';
+...
+const PeopleContainer = () =&gt; {
   const { anomaly, isLoading, people, refetch } = usePeople();
   return &lt;People people={people} loaderMode={setLoaderMode({ isLoading })} refetch={refetch} anomaly={anomaly} /&gt;;
 };
@@ -1427,14 +1672,41 @@ export default PeopleContainer;</code>
 export default PeopleContainer;</textarea></pre>
               <pre class="code-wrapper--notes fragment fade-in-then-out"> 
                 <div class="sg-notes">
-                  <div class="sg-note" style="top: 127.5px"><span class="sg-note__content">On modifie l'export par défaut</span></div>
-                </div><code class="language-javascript sg-code js-code" data-trim="data-trim" data-line-numbers="6" data-ln-start-from="">const PeopleContainer = () =&gt; {
+                  <div class="sg-note" style="top: 127.5px"><span class="sg-note__content">On les passe à la vue</span></div>
+                </div><code class="language-javascript sg-code js-code" data-trim="data-trim" data-line-numbers="6" data-ln-start-from="">...
+import { setLoaderMode } from 'shared/components/Loader';
+...
+const PeopleContainer = () =&gt; {
   const { anomaly, isLoading, people, refetch } = usePeople();
   return &lt;People people={people} loaderMode={setLoaderMode({ isLoading })} refetch={refetch} anomaly={anomaly} /&gt;;
 };
 
 export default PeopleContainer;</code>
-                <textarea class="sg-code-input">const PeopleContainer = () =&gt; {
+                <textarea class="sg-code-input">...
+import { setLoaderMode } from 'shared/components/Loader';
+...
+const PeopleContainer = () =&gt; {
+  const { anomaly, isLoading, people, refetch } = usePeople();
+  return &lt;People people={people} loaderMode={setLoaderMode({ isLoading })} refetch={refetch} anomaly={anomaly} /&gt;;
+};
+
+export default PeopleContainer;</textarea></pre>
+              <pre class="code-wrapper--notes fragment fade-in-then-out"> 
+                <div class="sg-notes">
+                  <div class="sg-note" style="top: 198px"><span class="sg-note__content">On modifie l'export par défaut</span></div>
+                </div><code class="language-javascript sg-code js-code" data-trim="data-trim" data-line-numbers="9" data-ln-start-from="">...
+import { setLoaderMode } from 'shared/components/Loader';
+...
+const PeopleContainer = () =&gt; {
+  const { anomaly, isLoading, people, refetch } = usePeople();
+  return &lt;People people={people} loaderMode={setLoaderMode({ isLoading })} refetch={refetch} anomaly={anomaly} /&gt;;
+};
+
+export default PeopleContainer;</code>
+                <textarea class="sg-code-input">...
+import { setLoaderMode } from 'shared/components/Loader';
+...
+const PeopleContainer = () =&gt; {
   const { anomaly, isLoading, people, refetch } = usePeople();
   return &lt;People people={people} loaderMode={setLoaderMode({ isLoading })} refetch={refetch} anomaly={anomaly} /&gt;;
 };
@@ -1442,13 +1714,18 @@ export default PeopleContainer;</code>
 export default PeopleContainer;</textarea></pre>
             </div>
           </section>
-          <section class="sg-exo1-cucumber-11" id="exo1-cucumber-11" data-background="" data-background-transition="fade">          
-            <h2>Modifier la vue</h2><span class="file">src/page/People/People.tsx : People </span>
+          <section class="sg-exo1-update-vue" id="exo1-update-vue" data-background="" data-background-transition="fade">          
+            <h2>Modifier la vue</h2><span class="file">src/pages/People/People.tsx : People </span>
             <div class="r-stack">
               <pre class="code-wrapper--notes fragment fade-in-then-out"> 
                 <div class="sg-notes">
-                  <div class="sg-note" style="top: 10px"><span class="sg-note__content">On modifie le type de People</span></div>
-                </div><code class="language-javascript sg-code js-code" data-trim="data-trim" data-line-numbers="1-5" data-ln-start-from="">export type TPeople = TLayoutPage &amp;
+                  <div class="sg-note" style="top: 33.5px"><span class="sg-note__content">On ajoute les imports nécessaires</span></div>
+                </div><code class="language-javascript sg-code  sg-code--no-max-height js-code  js-code--no-max-height" data-trim="data-trim" data-line-numbers="2-4" data-ln-start-from="">...
+import Loader, { TLoader, setLoaderMode } from 'shared/components/Loader';
+import Resilience from 'shared/components/Resilience';
+import Table, { setDisplay } from 'shared/components/Table';
+...
+export type TPeople = TLayoutPage &amp;
   Pick&lt;TReturnUsePeople, 'people' | 'anomaly' | 'refetch'&gt; &amp; {
     loaderMode: TLoader['mode'];
     headers?: typeof TABLE_HEADERS_PEOPLE;
@@ -1456,15 +1733,20 @@ export default PeopleContainer;</textarea></pre>
 
 const People = ({ titleBar = TITLE_BAR, title = TITLE, people, headers = TABLE_HEADERS_PEOPLE, refetch, loaderMode, anomaly }: TPeople) =&gt; (
   &lt;Layout propsTitle={{ title: titleBar, backHome: true }}&gt;
-    &lt;h1 className=&quot;af-title--content&quot;&gt;{title}&lt;/h1&gt;
+    &lt;h2 className=&quot;af-title--content&quot;&gt;{title}&lt;/h2&gt;
     &lt;Loader mode={loaderMode}&gt;
       &lt;Resilience anomaly={anomaly} refetch={refetch as React.MouseEventHandler&lt;HTMLButtonElement&gt;}&gt;
-        &lt;Table items={people} headers={headers} aria-label={`${title}`} /&gt;
+        &lt;Table title=&quot;Titre de mon tableau&quot; items={people} headers={headers} itemsType=&quot;membres&quot; /&gt;
       &lt;/Resilience&gt;
     &lt;/Loader&gt;
   &lt;/Layout&gt;
 );</code>
-                <textarea class="sg-code-input">export type TPeople = TLayoutPage &amp;
+                <textarea class="sg-code-input">...
+import Loader, { TLoader, setLoaderMode } from 'shared/components/Loader';
+import Resilience from 'shared/components/Resilience';
+import Table, { setDisplay } from 'shared/components/Table';
+...
+export type TPeople = TLayoutPage &amp;
   Pick&lt;TReturnUsePeople, 'people' | 'anomaly' | 'refetch'&gt; &amp; {
     loaderMode: TLoader['mode'];
     headers?: typeof TABLE_HEADERS_PEOPLE;
@@ -1472,18 +1754,23 @@ const People = ({ titleBar = TITLE_BAR, title = TITLE, people, headers = TABLE_H
 
 const People = ({ titleBar = TITLE_BAR, title = TITLE, people, headers = TABLE_HEADERS_PEOPLE, refetch, loaderMode, anomaly }: TPeople) =&gt; (
   &lt;Layout propsTitle={{ title: titleBar, backHome: true }}&gt;
-    &lt;h1 className=&quot;af-title--content&quot;&gt;{title}&lt;/h1&gt;
+    &lt;h2 className=&quot;af-title--content&quot;&gt;{title}&lt;/h2&gt;
     &lt;Loader mode={loaderMode}&gt;
       &lt;Resilience anomaly={anomaly} refetch={refetch as React.MouseEventHandler&lt;HTMLButtonElement&gt;}&gt;
-        &lt;Table items={people} headers={headers} aria-label={`${title}`} /&gt;
+        &lt;Table title=&quot;Titre de mon tableau&quot; items={people} headers={headers} itemsType=&quot;membres&quot; /&gt;
       &lt;/Resilience&gt;
     &lt;/Loader&gt;
   &lt;/Layout&gt;
 );</textarea></pre>
               <pre class="code-wrapper--notes fragment fade-in-then-out"> 
                 <div class="sg-notes">
-                  <div class="sg-note" style="top: 151px"><span class="sg-note__content">On modifie les props d'entrée</span></div>
-                </div><code class="language-javascript sg-code js-code" data-trim="data-trim" data-line-numbers="7" data-ln-start-from="">export type TPeople = TLayoutPage &amp;
+                  <div class="sg-note" style="top: 127.5px"><span class="sg-note__content">On modifie le type de People</span></div>
+                </div><code class="language-javascript sg-code  sg-code--no-max-height js-code  js-code--no-max-height" data-trim="data-trim" data-line-numbers="6-10" data-ln-start-from="">...
+import Loader, { TLoader, setLoaderMode } from 'shared/components/Loader';
+import Resilience from 'shared/components/Resilience';
+import Table, { setDisplay } from 'shared/components/Table';
+...
+export type TPeople = TLayoutPage &amp;
   Pick&lt;TReturnUsePeople, 'people' | 'anomaly' | 'refetch'&gt; &amp; {
     loaderMode: TLoader['mode'];
     headers?: typeof TABLE_HEADERS_PEOPLE;
@@ -1491,15 +1778,20 @@ const People = ({ titleBar = TITLE_BAR, title = TITLE, people, headers = TABLE_H
 
 const People = ({ titleBar = TITLE_BAR, title = TITLE, people, headers = TABLE_HEADERS_PEOPLE, refetch, loaderMode, anomaly }: TPeople) =&gt; (
   &lt;Layout propsTitle={{ title: titleBar, backHome: true }}&gt;
-    &lt;h1 className=&quot;af-title--content&quot;&gt;{title}&lt;/h1&gt;
+    &lt;h2 className=&quot;af-title--content&quot;&gt;{title}&lt;/h2&gt;
     &lt;Loader mode={loaderMode}&gt;
       &lt;Resilience anomaly={anomaly} refetch={refetch as React.MouseEventHandler&lt;HTMLButtonElement&gt;}&gt;
-        &lt;Table items={people} headers={headers} aria-label={`${title}`} /&gt;
+        &lt;Table title=&quot;Titre de mon tableau&quot; items={people} headers={headers} itemsType=&quot;membres&quot; /&gt;
       &lt;/Resilience&gt;
     &lt;/Loader&gt;
   &lt;/Layout&gt;
 );</code>
-                <textarea class="sg-code-input">export type TPeople = TLayoutPage &amp;
+                <textarea class="sg-code-input">...
+import Loader, { TLoader, setLoaderMode } from 'shared/components/Loader';
+import Resilience from 'shared/components/Resilience';
+import Table, { setDisplay } from 'shared/components/Table';
+...
+export type TPeople = TLayoutPage &amp;
   Pick&lt;TReturnUsePeople, 'people' | 'anomaly' | 'refetch'&gt; &amp; {
     loaderMode: TLoader['mode'];
     headers?: typeof TABLE_HEADERS_PEOPLE;
@@ -1507,18 +1799,23 @@ const People = ({ titleBar = TITLE_BAR, title = TITLE, people, headers = TABLE_H
 
 const People = ({ titleBar = TITLE_BAR, title = TITLE, people, headers = TABLE_HEADERS_PEOPLE, refetch, loaderMode, anomaly }: TPeople) =&gt; (
   &lt;Layout propsTitle={{ title: titleBar, backHome: true }}&gt;
-    &lt;h1 className=&quot;af-title--content&quot;&gt;{title}&lt;/h1&gt;
+    &lt;h2 className=&quot;af-title--content&quot;&gt;{title}&lt;/h2&gt;
     &lt;Loader mode={loaderMode}&gt;
       &lt;Resilience anomaly={anomaly} refetch={refetch as React.MouseEventHandler&lt;HTMLButtonElement&gt;}&gt;
-        &lt;Table items={people} headers={headers} aria-label={`${title}`} /&gt;
+        &lt;Table title=&quot;Titre de mon tableau&quot; items={people} headers={headers} itemsType=&quot;membres&quot; /&gt;
       &lt;/Resilience&gt;
     &lt;/Loader&gt;
   &lt;/Layout&gt;
 );</textarea></pre>
               <pre class="code-wrapper--notes fragment fade-in-then-out"> 
                 <div class="sg-notes">
-                  <div class="sg-note" style="top: 221.5px"><span class="sg-note__content">On ajoute le Loader qui affichera un <br/>loader en fonction de l'état de chargement</span></div>
-                </div><code class="language-javascript sg-code js-code" data-trim="data-trim" data-line-numbers="10,14" data-ln-start-from="">export type TPeople = TLayoutPage &amp;
+                  <div class="sg-note" style="top: 268.5px"><span class="sg-note__content">On modifie les props d'entrée</span></div>
+                </div><code class="language-javascript sg-code  sg-code--no-max-height js-code  js-code--no-max-height" data-trim="data-trim" data-line-numbers="12" data-ln-start-from="">...
+import Loader, { TLoader, setLoaderMode } from 'shared/components/Loader';
+import Resilience from 'shared/components/Resilience';
+import Table, { setDisplay } from 'shared/components/Table';
+...
+export type TPeople = TLayoutPage &amp;
   Pick&lt;TReturnUsePeople, 'people' | 'anomaly' | 'refetch'&gt; &amp; {
     loaderMode: TLoader['mode'];
     headers?: typeof TABLE_HEADERS_PEOPLE;
@@ -1526,15 +1823,20 @@ const People = ({ titleBar = TITLE_BAR, title = TITLE, people, headers = TABLE_H
 
 const People = ({ titleBar = TITLE_BAR, title = TITLE, people, headers = TABLE_HEADERS_PEOPLE, refetch, loaderMode, anomaly }: TPeople) =&gt; (
   &lt;Layout propsTitle={{ title: titleBar, backHome: true }}&gt;
-    &lt;h1 className=&quot;af-title--content&quot;&gt;{title}&lt;/h1&gt;
+    &lt;h2 className=&quot;af-title--content&quot;&gt;{title}&lt;/h2&gt;
     &lt;Loader mode={loaderMode}&gt;
       &lt;Resilience anomaly={anomaly} refetch={refetch as React.MouseEventHandler&lt;HTMLButtonElement&gt;}&gt;
-        &lt;Table items={people} headers={headers} aria-label={`${title}`} /&gt;
+        &lt;Table title=&quot;Titre de mon tableau&quot; items={people} headers={headers} itemsType=&quot;membres&quot; /&gt;
       &lt;/Resilience&gt;
     &lt;/Loader&gt;
   &lt;/Layout&gt;
 );</code>
-                <textarea class="sg-code-input">export type TPeople = TLayoutPage &amp;
+                <textarea class="sg-code-input">...
+import Loader, { TLoader, setLoaderMode } from 'shared/components/Loader';
+import Resilience from 'shared/components/Resilience';
+import Table, { setDisplay } from 'shared/components/Table';
+...
+export type TPeople = TLayoutPage &amp;
   Pick&lt;TReturnUsePeople, 'people' | 'anomaly' | 'refetch'&gt; &amp; {
     loaderMode: TLoader['mode'];
     headers?: typeof TABLE_HEADERS_PEOPLE;
@@ -1542,18 +1844,23 @@ const People = ({ titleBar = TITLE_BAR, title = TITLE, people, headers = TABLE_H
 
 const People = ({ titleBar = TITLE_BAR, title = TITLE, people, headers = TABLE_HEADERS_PEOPLE, refetch, loaderMode, anomaly }: TPeople) =&gt; (
   &lt;Layout propsTitle={{ title: titleBar, backHome: true }}&gt;
-    &lt;h1 className=&quot;af-title--content&quot;&gt;{title}&lt;/h1&gt;
+    &lt;h2 className=&quot;af-title--content&quot;&gt;{title}&lt;/h2&gt;
     &lt;Loader mode={loaderMode}&gt;
       &lt;Resilience anomaly={anomaly} refetch={refetch as React.MouseEventHandler&lt;HTMLButtonElement&gt;}&gt;
-        &lt;Table items={people} headers={headers} aria-label={`${title}`} /&gt;
+        &lt;Table title=&quot;Titre de mon tableau&quot; items={people} headers={headers} itemsType=&quot;membres&quot; /&gt;
       &lt;/Resilience&gt;
     &lt;/Loader&gt;
   &lt;/Layout&gt;
 );</textarea></pre>
               <pre class="code-wrapper--notes fragment fade-in-then-out"> 
                 <div class="sg-notes">
-                  <div class="sg-note" style="top: 245px"><span class="sg-note__content">On ajoute le composant Resilience <br/>qui affichera un fallback en cas d'anomalie</span></div>
-                </div><code class="language-javascript sg-code js-code" data-trim="data-trim" data-line-numbers="11,13" data-ln-start-from="">export type TPeople = TLayoutPage &amp;
+                  <div class="sg-note" style="top: 339px"><span class="sg-note__content">On ajoute le Loader qui affichera un <br/>loader en fonction de l'état de chargement</span></div>
+                </div><code class="language-javascript sg-code  sg-code--no-max-height js-code  js-code--no-max-height" data-trim="data-trim" data-line-numbers="15,19" data-ln-start-from="">...
+import Loader, { TLoader, setLoaderMode } from 'shared/components/Loader';
+import Resilience from 'shared/components/Resilience';
+import Table, { setDisplay } from 'shared/components/Table';
+...
+export type TPeople = TLayoutPage &amp;
   Pick&lt;TReturnUsePeople, 'people' | 'anomaly' | 'refetch'&gt; &amp; {
     loaderMode: TLoader['mode'];
     headers?: typeof TABLE_HEADERS_PEOPLE;
@@ -1561,15 +1868,20 @@ const People = ({ titleBar = TITLE_BAR, title = TITLE, people, headers = TABLE_H
 
 const People = ({ titleBar = TITLE_BAR, title = TITLE, people, headers = TABLE_HEADERS_PEOPLE, refetch, loaderMode, anomaly }: TPeople) =&gt; (
   &lt;Layout propsTitle={{ title: titleBar, backHome: true }}&gt;
-    &lt;h1 className=&quot;af-title--content&quot;&gt;{title}&lt;/h1&gt;
+    &lt;h2 className=&quot;af-title--content&quot;&gt;{title}&lt;/h2&gt;
     &lt;Loader mode={loaderMode}&gt;
       &lt;Resilience anomaly={anomaly} refetch={refetch as React.MouseEventHandler&lt;HTMLButtonElement&gt;}&gt;
-        &lt;Table items={people} headers={headers} aria-label={`${title}`} /&gt;
+        &lt;Table title=&quot;Titre de mon tableau&quot; items={people} headers={headers} itemsType=&quot;membres&quot; /&gt;
       &lt;/Resilience&gt;
     &lt;/Loader&gt;
   &lt;/Layout&gt;
 );</code>
-                <textarea class="sg-code-input">export type TPeople = TLayoutPage &amp;
+                <textarea class="sg-code-input">...
+import Loader, { TLoader, setLoaderMode } from 'shared/components/Loader';
+import Resilience from 'shared/components/Resilience';
+import Table, { setDisplay } from 'shared/components/Table';
+...
+export type TPeople = TLayoutPage &amp;
   Pick&lt;TReturnUsePeople, 'people' | 'anomaly' | 'refetch'&gt; &amp; {
     loaderMode: TLoader['mode'];
     headers?: typeof TABLE_HEADERS_PEOPLE;
@@ -1577,18 +1889,23 @@ const People = ({ titleBar = TITLE_BAR, title = TITLE, people, headers = TABLE_H
 
 const People = ({ titleBar = TITLE_BAR, title = TITLE, people, headers = TABLE_HEADERS_PEOPLE, refetch, loaderMode, anomaly }: TPeople) =&gt; (
   &lt;Layout propsTitle={{ title: titleBar, backHome: true }}&gt;
-    &lt;h1 className=&quot;af-title--content&quot;&gt;{title}&lt;/h1&gt;
+    &lt;h2 className=&quot;af-title--content&quot;&gt;{title}&lt;/h2&gt;
     &lt;Loader mode={loaderMode}&gt;
       &lt;Resilience anomaly={anomaly} refetch={refetch as React.MouseEventHandler&lt;HTMLButtonElement&gt;}&gt;
-        &lt;Table items={people} headers={headers} aria-label={`${title}`} /&gt;
+        &lt;Table title=&quot;Titre de mon tableau&quot; items={people} headers={headers} itemsType=&quot;membres&quot; /&gt;
       &lt;/Resilience&gt;
     &lt;/Loader&gt;
   &lt;/Layout&gt;
 );</textarea></pre>
               <pre class="code-wrapper--notes fragment fade-in-then-out"> 
                 <div class="sg-notes">
-                  <div class="sg-note" style="top: 268.5px"><span class="sg-note__content">On ajoute le composant Table <br/>qui affichera le tableau si tout est ok</span></div>
-                </div><code class="language-javascript sg-code js-code" data-trim="data-trim" data-line-numbers="12" data-ln-start-from="">export type TPeople = TLayoutPage &amp;
+                  <div class="sg-note" style="top: 362.5px"><span class="sg-note__content">On ajoute le composant Resilience <br/>qui affichera un fallback en cas d'anomalie</span></div>
+                </div><code class="language-javascript sg-code  sg-code--no-max-height js-code  js-code--no-max-height" data-trim="data-trim" data-line-numbers="16,18" data-ln-start-from="">...
+import Loader, { TLoader, setLoaderMode } from 'shared/components/Loader';
+import Resilience from 'shared/components/Resilience';
+import Table, { setDisplay } from 'shared/components/Table';
+...
+export type TPeople = TLayoutPage &amp;
   Pick&lt;TReturnUsePeople, 'people' | 'anomaly' | 'refetch'&gt; &amp; {
     loaderMode: TLoader['mode'];
     headers?: typeof TABLE_HEADERS_PEOPLE;
@@ -1596,15 +1913,20 @@ const People = ({ titleBar = TITLE_BAR, title = TITLE, people, headers = TABLE_H
 
 const People = ({ titleBar = TITLE_BAR, title = TITLE, people, headers = TABLE_HEADERS_PEOPLE, refetch, loaderMode, anomaly }: TPeople) =&gt; (
   &lt;Layout propsTitle={{ title: titleBar, backHome: true }}&gt;
-    &lt;h1 className=&quot;af-title--content&quot;&gt;{title}&lt;/h1&gt;
+    &lt;h2 className=&quot;af-title--content&quot;&gt;{title}&lt;/h2&gt;
     &lt;Loader mode={loaderMode}&gt;
       &lt;Resilience anomaly={anomaly} refetch={refetch as React.MouseEventHandler&lt;HTMLButtonElement&gt;}&gt;
-        &lt;Table items={people} headers={headers} aria-label={`${title}`} /&gt;
+        &lt;Table title=&quot;Titre de mon tableau&quot; items={people} headers={headers} itemsType=&quot;membres&quot; /&gt;
       &lt;/Resilience&gt;
     &lt;/Loader&gt;
   &lt;/Layout&gt;
 );</code>
-                <textarea class="sg-code-input">export type TPeople = TLayoutPage &amp;
+                <textarea class="sg-code-input">...
+import Loader, { TLoader, setLoaderMode } from 'shared/components/Loader';
+import Resilience from 'shared/components/Resilience';
+import Table, { setDisplay } from 'shared/components/Table';
+...
+export type TPeople = TLayoutPage &amp;
   Pick&lt;TReturnUsePeople, 'people' | 'anomaly' | 'refetch'&gt; &amp; {
     loaderMode: TLoader['mode'];
     headers?: typeof TABLE_HEADERS_PEOPLE;
@@ -1612,10 +1934,55 @@ const People = ({ titleBar = TITLE_BAR, title = TITLE, people, headers = TABLE_H
 
 const People = ({ titleBar = TITLE_BAR, title = TITLE, people, headers = TABLE_HEADERS_PEOPLE, refetch, loaderMode, anomaly }: TPeople) =&gt; (
   &lt;Layout propsTitle={{ title: titleBar, backHome: true }}&gt;
-    &lt;h1 className=&quot;af-title--content&quot;&gt;{title}&lt;/h1&gt;
+    &lt;h2 className=&quot;af-title--content&quot;&gt;{title}&lt;/h2&gt;
     &lt;Loader mode={loaderMode}&gt;
       &lt;Resilience anomaly={anomaly} refetch={refetch as React.MouseEventHandler&lt;HTMLButtonElement&gt;}&gt;
-        &lt;Table items={people} headers={headers} aria-label={`${title}`} /&gt;
+        &lt;Table title=&quot;Titre de mon tableau&quot; items={people} headers={headers} itemsType=&quot;membres&quot; /&gt;
+      &lt;/Resilience&gt;
+    &lt;/Loader&gt;
+  &lt;/Layout&gt;
+);</textarea></pre>
+              <pre class="code-wrapper--notes fragment fade-in-then-out"> 
+                <div class="sg-notes">
+                  <div class="sg-note" style="top: 386px"><span class="sg-note__content">On ajoute le composant Table <br/>qui affichera le tableau si tout est ok</span></div>
+                </div><code class="language-javascript sg-code  sg-code--no-max-height js-code  js-code--no-max-height" data-trim="data-trim" data-line-numbers="17" data-ln-start-from="">...
+import Loader, { TLoader, setLoaderMode } from 'shared/components/Loader';
+import Resilience from 'shared/components/Resilience';
+import Table, { setDisplay } from 'shared/components/Table';
+...
+export type TPeople = TLayoutPage &amp;
+  Pick&lt;TReturnUsePeople, 'people' | 'anomaly' | 'refetch'&gt; &amp; {
+    loaderMode: TLoader['mode'];
+    headers?: typeof TABLE_HEADERS_PEOPLE;
+  };
+
+const People = ({ titleBar = TITLE_BAR, title = TITLE, people, headers = TABLE_HEADERS_PEOPLE, refetch, loaderMode, anomaly }: TPeople) =&gt; (
+  &lt;Layout propsTitle={{ title: titleBar, backHome: true }}&gt;
+    &lt;h2 className=&quot;af-title--content&quot;&gt;{title}&lt;/h2&gt;
+    &lt;Loader mode={loaderMode}&gt;
+      &lt;Resilience anomaly={anomaly} refetch={refetch as React.MouseEventHandler&lt;HTMLButtonElement&gt;}&gt;
+        &lt;Table title=&quot;Titre de mon tableau&quot; items={people} headers={headers} itemsType=&quot;membres&quot; /&gt;
+      &lt;/Resilience&gt;
+    &lt;/Loader&gt;
+  &lt;/Layout&gt;
+);</code>
+                <textarea class="sg-code-input">...
+import Loader, { TLoader, setLoaderMode } from 'shared/components/Loader';
+import Resilience from 'shared/components/Resilience';
+import Table, { setDisplay } from 'shared/components/Table';
+...
+export type TPeople = TLayoutPage &amp;
+  Pick&lt;TReturnUsePeople, 'people' | 'anomaly' | 'refetch'&gt; &amp; {
+    loaderMode: TLoader['mode'];
+    headers?: typeof TABLE_HEADERS_PEOPLE;
+  };
+
+const People = ({ titleBar = TITLE_BAR, title = TITLE, people, headers = TABLE_HEADERS_PEOPLE, refetch, loaderMode, anomaly }: TPeople) =&gt; (
+  &lt;Layout propsTitle={{ title: titleBar, backHome: true }}&gt;
+    &lt;h2 className=&quot;af-title--content&quot;&gt;{title}&lt;/h2&gt;
+    &lt;Loader mode={loaderMode}&gt;
+      &lt;Resilience anomaly={anomaly} refetch={refetch as React.MouseEventHandler&lt;HTMLButtonElement&gt;}&gt;
+        &lt;Table title=&quot;Titre de mon tableau&quot; items={people} headers={headers} itemsType=&quot;membres&quot; /&gt;
       &lt;/Resilience&gt;
     &lt;/Loader&gt;
   &lt;/Layout&gt;
@@ -1629,7 +1996,7 @@ const People = ({ titleBar = TITLE_BAR, title = TITLE, people, headers = TABLE_H
             <div class="flex-column-center"><span class="file">Pour compléter nos tests, nous allons ajouter un peu de Tests Unitaires</span></div>
           </section>
           <section class="sg-exo1-unit-test" id="exo1-unit-test" data-background="" data-background-transition="fade" data-auto-animate="data-auto-animate">           
-            <h2>Ajout de tests unitaires</h2><span class="file">src/page/People/__tests__/People.test.tsx </span>
+            <h2>Ajout de tests unitaires</h2><span class="file">src/pages/People/__tests__/People.test.tsx </span>
             <div class="r-stack">
               <pre class="fragment fade-in-then-out">                       
                 <div class="sg-notes">
@@ -1935,7 +2302,7 @@ import { computeInfos, usePeople } from '../People';</textarea>
             </div>
           </section>
           <section class="sg-exo1-solution" id="exo1-solution" data-background="" data-background-transition="fade" data-auto-animate="data-auto-animate">           
-            <h2>Solution</h2><span class="file">Dispo sur la branche feature/dojo-starter sur <a href="https://github.com/samuel-gomez/react-starter-vitejs/commit/5f37165f3303835d52540cfa449032e69ebd77a4" target="blank">Github</a></span>
+            <h2>Solution</h2><span class="file">Dispo sur la branche feature/dojo-starter sur <a href="https://github.com/samuel-gomez/react-starter-vitejs/commit/72286e1dfe310057817db6abe7221479a3cd3f89" target="blank">Github</a></span>
           </section>
         </section>
         <section class="sg-exo2" id="exo2" data-background="" data-background-transition="fade">
@@ -1981,7 +2348,7 @@ import { computeInfos, usePeople } from '../People';</textarea>
             </ul>
           </section>
           <section class="sg-exo1-solution" id="exo1-solution" data-background="" data-background-transition="fade" data-auto-animate="data-auto-animate">           
-            <h2>Solution</h2><span class="file">Dispo sur la branche feature/dojo-starter sur <a href="https://github.com/samuel-gomez/react-starter-vitejs/commit/80820acf0ee2b908c43a07d46d41b830ecad1512" target="blank">Github</a></span>
+            <h2>Solution</h2><span class="file">Dispo sur la branche feature/dojo-starter sur <a href="https://github.com/samuel-gomez/react-starter-vitejs/commit/f6a8604225bc6f7d8a437b5d4199f6ced97a8bfc" target="blank">Github</a></span>
           </section>
         </section>
       </div>
