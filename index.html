@@ -978,21 +978,21 @@ import {
 import { serverUseGet } from 'shared/testsUtils/msw';
 import People from '..';
   ...
-  const tableAriaLabel = 'Tableau des gens';
+  const tableItemsType = 'membres';
   and('la page reçoit les données suivantes', responseBody =&gt; {
     serverUseGet&lt;TPeopleData[]&gt;({ route: 'people', responseBody }); // le typage sera fait juste après
   });
   ...
-  LaPageContientUnTableau(and, 'la page contient un tableau répertoriant la liste des gens', tableAriaLabel);
+  LaPageContientUnTableau(and, 'la page contient un tableau répertoriant la liste des gens', tableItemsType);
   LeTableauPresenteDesEntetesDeColonnesDansLOrdreSuivant(
     and,
     /^le tableau présente des entêtes de colonnes dans l’ordre suivant : &quot;(.*)&quot;, &quot;(.*)&quot;, &quot;(.*)&quot;, &quot;(.*)&quot;$/,
-    tableAriaLabel,
+    tableItemsType,
   );
   LeTableauContientLesLignesCorrespondantAuxDonneesRecues(
     and,
     /^le tableau contient (\d+) lignes avec (\d+) colonnes dans l'ordre suivant :$/,
-    tableAriaLabel,
+    tableItemsType,
   );</code>
               <textarea class="sg-code-input">...
 import {
@@ -1005,21 +1005,21 @@ import {
 import { serverUseGet } from 'shared/testsUtils/msw';
 import People from '..';
   ...
-  const tableAriaLabel = 'Tableau des gens';
+  const tableItemsType = 'membres';
   and('la page reçoit les données suivantes', responseBody =&gt; {
     serverUseGet&lt;TPeopleData[]&gt;({ route: 'people', responseBody }); // le typage sera fait juste après
   });
   ...
-  LaPageContientUnTableau(and, 'la page contient un tableau répertoriant la liste des gens', tableAriaLabel);
+  LaPageContientUnTableau(and, 'la page contient un tableau répertoriant la liste des gens', tableItemsType);
   LeTableauPresenteDesEntetesDeColonnesDansLOrdreSuivant(
     and,
     /^le tableau présente des entêtes de colonnes dans l’ordre suivant : &quot;(.*)&quot;, &quot;(.*)&quot;, &quot;(.*)&quot;, &quot;(.*)&quot;$/,
-    tableAriaLabel,
+    tableItemsType,
   );
   LeTableauContientLesLignesCorrespondantAuxDonneesRecues(
     and,
     /^le tableau contient (\d+) lignes avec (\d+) colonnes dans l'ordre suivant :$/,
-    tableAriaLabel,
+    tableItemsType,
   );</textarea></pre>
           </section>
           <section class="sg-exo1-api-url" id="exo1-api-url" data-background="" data-background-transition="fade" data-auto-animate="data-auto-animate">          

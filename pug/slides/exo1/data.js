@@ -261,21 +261,21 @@ import {
 import { serverUseGet } from 'shared/testsUtils/msw';
 import People from '..';
   ...
-  const tableAriaLabel = 'Tableau des gens';
+  const tableItemsType = 'membres';
   and('la page reçoit les données suivantes', responseBody => {
     serverUseGet<TPeopleData[]>({ route: 'people', responseBody }); // le typage sera fait juste après
   });
   ...
-  LaPageContientUnTableau(and, 'la page contient un tableau répertoriant la liste des gens', tableAriaLabel);
+  LaPageContientUnTableau(and, 'la page contient un tableau répertoriant la liste des gens', tableItemsType);
   LeTableauPresenteDesEntetesDeColonnesDansLOrdreSuivant(
     and,
     /^le tableau présente des entêtes de colonnes dans l’ordre suivant : "(.*)", "(.*)", "(.*)", "(.*)"$/,
-    tableAriaLabel,
+    tableItemsType,
   );
   LeTableauContientLesLignesCorrespondantAuxDonneesRecues(
     and,
     /^le tableau contient (\\d+) lignes avec (\\d+) colonnes dans l'ordre suivant :$/,
-    tableAriaLabel,
+    tableItemsType,
   );`,
     ],
     unitTestPeople: [

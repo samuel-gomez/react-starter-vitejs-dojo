@@ -35,6 +35,10 @@ $color-info-light: #def5ff;
   --sg-info-color-light: #{$color-info-light};
 }
 
+.reveal .slides {
+  scale: 0.8;
+}
+
 @import "./scss/mixins.scss";
 
 /* Components */
