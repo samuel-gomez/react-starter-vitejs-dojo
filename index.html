@@ -209,7 +209,7 @@
               </article>
               <article class="sg-card  sg-card--with-left-icon fade-up"> <img class="sg-img sg-card__image" src="././assets/images/tests.svg" alt="tests.svg" loading="lazy"/>
                 <h3 class="sg-card__title">  Tests</h3>
-                <p class="sg-card__content"> Vitest, Jest Cucumber, Testing Library, Jest Axe, Guerkins</p>
+                <p class="sg-card__content"> Vitest, Jest Cucumber, Testing Library, Jest Axe, Gherkins</p>
               </article>
             </div>
           </section>
@@ -338,7 +338,7 @@
               </article>
               <article class="sg-card  sg-card--user fade-up"> <img class="sg-img sg-card__image" src="././assets/images/cucumber.svg" alt="cucumber.svg" loading="lazy"/>
                 <h3 class="sg-card__title">  Jest Cucumber</h3>
-                <p class="sg-card__content"> Pour les tests d'intégration, un dossier /features contient les scénarios Guerkin</p>
+                <p class="sg-card__content"> Pour les tests d'intégration, un dossier /features contient les scénarios Gherkin</p>
               </article>
               <article class="sg-card  sg-card--user fade-up"> <img class="sg-img sg-card__image" src="././assets/images/msw.svg" alt="msw.svg" loading="lazy"/>
                 <h3 class="sg-card__title">  MSW</h3>
@@ -813,7 +813,7 @@ defineFeature(feature, test =&gt; {
           <section class="sg-exo1-cucumber-2" id="exo1-cucumber-2" data-background="" data-background-transition="fade" data-auto-animate="data-auto-animate">           
             <h2>Générer le test</h2><span class="file">Lancer la commande suivante :</span>
             <pre>                 <code class="language-javascript sg-code js-code" data-trim="data-trim" data-ln-start-from="">npm t People.spec.tsx</code>
-              <textarea class="sg-code-input">npm t People.spec.tsx</textarea></pre><span class="file">Récupérez le code généré dans le terminal</span><br><img class="sg-img " src="././assets/images/guerkin-test-fail.jpg" alt="guerkin test fail" loading="lazy"/><br><span class="file">src/pages/People/__tests__/People.spec.tsx </span>
+              <textarea class="sg-code-input">npm t People.spec.tsx</textarea></pre><span class="file">Récupérez le code généré dans le terminal</span><br><img class="sg-img " src="././assets/images/guerkin-test-fail.jpg" alt="gherkin test fail" loading="lazy"/><br><span class="file">src/pages/People/__tests__/People.spec.tsx </span>
             <pre data-id="code-animation">              <code class="language-javascript sg-code js-code" data-trim="data-trim" data-line-numbers="3-5" data-ln-start-from="">defineFeature(feature, test =&gt; {
   test('Affichage de la page People', ({ given, when, then }) =&gt; {
     given(/^Je suis un utilisateur connu et connecté avec le profil (.*)$/, arg0 =&gt; {});
@@ -960,12 +960,12 @@ And le tableau contient 4 lignes avec 4 colonnes dans l'ordre suivant :
 });</textarea></pre>
           </section>
           <section class="sg-exo1-cucumber-6" id="exo1-cucumber-6" data-background="" data-background-transition="fade" data-auto-animate="data-auto-animate">          
-            <h2>Utiliser les scénarios type</h2><span class="file">Feature/People/People.spec.tsx</span>
+            <h2>Utiliser les scénarios type</h2><span class="file">src/pages/People/People/People.spec.tsx</span>
             <pre class="code-wrapper--notes" data-id="code-animation"> 
               <div class="sg-notes">
                 <div class="sg-note fragment fade-in-then-out" style="top: 80.5px"><span class="sg-note__content">On importe les scénarios type</span></div>
                 <div class="sg-note fragment fade-in-then-out" style="top: 198px"><span class="sg-note__content">On importe <i>serverUseGet</i> qui permet de mocker les appels réseaux en GET via MSW</span></div>
-                <div class="sg-note fragment fade-in-then-out" style="top: 315.5px"><span class="sg-note__content">On passe les données du guerkin à la méthode <i>serverUseGet</i> (le typage sera fait après)</span></div>
+                <div class="sg-note fragment fade-in-then-out" style="top: 315.5px"><span class="sg-note__content">On passe les données du gherkin à la méthode <i>serverUseGet</i> (le typage sera fait après)</span></div>
                 <div class="sg-note fragment fade-in-then-out" style="top: 386px"><span class="sg-note__content">Ensuite, on remplace les scénarios générés par les scénarios type</span></div>
               </div><code class="language-javascript sg-code  sg-code--no-max-height js-code  js-code--no-max-height" data-trim="data-trim" data-line-numbers="4-6,9, 12-15, 17-27" data-ln-start-from="">...
 import {
@@ -1720,10 +1720,11 @@ export default PeopleContainer;</textarea></pre>
               <pre class="code-wrapper--notes fragment fade-in-then-out"> 
                 <div class="sg-notes">
                   <div class="sg-note" style="top: 33.5px"><span class="sg-note__content">On ajoute les imports nécessaires</span></div>
-                </div><code class="language-javascript sg-code  sg-code--no-max-height js-code  js-code--no-max-height" data-trim="data-trim" data-line-numbers="2-4" data-ln-start-from="">...
+                </div><code class="language-javascript sg-code  sg-code--no-max-height js-code  js-code--no-max-height" data-trim="data-trim" data-line-numbers="2-5" data-ln-start-from="">...
 import Loader, { TLoader, setLoaderMode } from 'shared/components/Loader';
 import Resilience from 'shared/components/Resilience';
 import Table, { setDisplay } from 'shared/components/Table';
+import { ENDPOINT, SERVICE_NAME, TABLE_HEADERS_PEOPLE, TITLE, TITLE_BAR } from './constants';
 ...
 export type TPeople = TLayoutPage &amp;
   Pick&lt;TReturnUsePeople, 'people' | 'anomaly' | 'refetch'&gt; &amp; {
@@ -1745,6 +1746,7 @@ const People = ({ titleBar = TITLE_BAR, title = TITLE, people, headers = TABLE_H
 import Loader, { TLoader, setLoaderMode } from 'shared/components/Loader';
 import Resilience from 'shared/components/Resilience';
 import Table, { setDisplay } from 'shared/components/Table';
+import { ENDPOINT, SERVICE_NAME, TABLE_HEADERS_PEOPLE, TITLE, TITLE_BAR } from './constants';
 ...
 export type TPeople = TLayoutPage &amp;
   Pick&lt;TReturnUsePeople, 'people' | 'anomaly' | 'refetch'&gt; &amp; {
@@ -1764,11 +1766,12 @@ const People = ({ titleBar = TITLE_BAR, title = TITLE, people, headers = TABLE_H
 );</textarea></pre>
               <pre class="code-wrapper--notes fragment fade-in-then-out"> 
                 <div class="sg-notes">
-                  <div class="sg-note" style="top: 127.5px"><span class="sg-note__content">On modifie le type de People</span></div>
-                </div><code class="language-javascript sg-code  sg-code--no-max-height js-code  js-code--no-max-height" data-trim="data-trim" data-line-numbers="6-10" data-ln-start-from="">...
+                  <div class="sg-note" style="top: 151px"><span class="sg-note__content">On modifie le type de People</span></div>
+                </div><code class="language-javascript sg-code  sg-code--no-max-height js-code  js-code--no-max-height" data-trim="data-trim" data-line-numbers="7-11" data-ln-start-from="">...
 import Loader, { TLoader, setLoaderMode } from 'shared/components/Loader';
 import Resilience from 'shared/components/Resilience';
 import Table, { setDisplay } from 'shared/components/Table';
+import { ENDPOINT, SERVICE_NAME, TABLE_HEADERS_PEOPLE, TITLE, TITLE_BAR } from './constants';
 ...
 export type TPeople = TLayoutPage &amp;
   Pick&lt;TReturnUsePeople, 'people' | 'anomaly' | 'refetch'&gt; &amp; {
@@ -1790,6 +1793,7 @@ const People = ({ titleBar = TITLE_BAR, title = TITLE, people, headers = TABLE_H
 import Loader, { TLoader, setLoaderMode } from 'shared/components/Loader';
 import Resilience from 'shared/components/Resilience';
 import Table, { setDisplay } from 'shared/components/Table';
+import { ENDPOINT, SERVICE_NAME, TABLE_HEADERS_PEOPLE, TITLE, TITLE_BAR } from './constants';
 ...
 export type TPeople = TLayoutPage &amp;
   Pick&lt;TReturnUsePeople, 'people' | 'anomaly' | 'refetch'&gt; &amp; {
@@ -1809,11 +1813,12 @@ const People = ({ titleBar = TITLE_BAR, title = TITLE, people, headers = TABLE_H
 );</textarea></pre>
               <pre class="code-wrapper--notes fragment fade-in-then-out"> 
                 <div class="sg-notes">
-                  <div class="sg-note" style="top: 268.5px"><span class="sg-note__content">On modifie les props d'entrée</span></div>
-                </div><code class="language-javascript sg-code  sg-code--no-max-height js-code  js-code--no-max-height" data-trim="data-trim" data-line-numbers="12" data-ln-start-from="">...
+                  <div class="sg-note" style="top: 292px"><span class="sg-note__content">On modifie les props d'entrée</span></div>
+                </div><code class="language-javascript sg-code  sg-code--no-max-height js-code  js-code--no-max-height" data-trim="data-trim" data-line-numbers="13" data-ln-start-from="">...
 import Loader, { TLoader, setLoaderMode } from 'shared/components/Loader';
 import Resilience from 'shared/components/Resilience';
 import Table, { setDisplay } from 'shared/components/Table';
+import { ENDPOINT, SERVICE_NAME, TABLE_HEADERS_PEOPLE, TITLE, TITLE_BAR } from './constants';
 ...
 export type TPeople = TLayoutPage &amp;
   Pick&lt;TReturnUsePeople, 'people' | 'anomaly' | 'refetch'&gt; &amp; {
@@ -1835,6 +1840,7 @@ const People = ({ titleBar = TITLE_BAR, title = TITLE, people, headers = TABLE_H
 import Loader, { TLoader, setLoaderMode } from 'shared/components/Loader';
 import Resilience from 'shared/components/Resilience';
 import Table, { setDisplay } from 'shared/components/Table';
+import { ENDPOINT, SERVICE_NAME, TABLE_HEADERS_PEOPLE, TITLE, TITLE_BAR } from './constants';
 ...
 export type TPeople = TLayoutPage &amp;
   Pick&lt;TReturnUsePeople, 'people' | 'anomaly' | 'refetch'&gt; &amp; {
@@ -1854,11 +1860,12 @@ const People = ({ titleBar = TITLE_BAR, title = TITLE, people, headers = TABLE_H
 );</textarea></pre>
               <pre class="code-wrapper--notes fragment fade-in-then-out"> 
                 <div class="sg-notes">
-                  <div class="sg-note" style="top: 339px"><span class="sg-note__content">On ajoute le Loader qui affichera un <br/>loader en fonction de l'état de chargement</span></div>
-                </div><code class="language-javascript sg-code  sg-code--no-max-height js-code  js-code--no-max-height" data-trim="data-trim" data-line-numbers="15,19" data-ln-start-from="">...
+                  <div class="sg-note" style="top: 362.5px"><span class="sg-note__content">On ajoute le Loader qui affichera un <br/>loader en fonction de l'état de chargement</span></div>
+                </div><code class="language-javascript sg-code  sg-code--no-max-height js-code  js-code--no-max-height" data-trim="data-trim" data-line-numbers="16,20" data-ln-start-from="">...
 import Loader, { TLoader, setLoaderMode } from 'shared/components/Loader';
 import Resilience from 'shared/components/Resilience';
 import Table, { setDisplay } from 'shared/components/Table';
+import { ENDPOINT, SERVICE_NAME, TABLE_HEADERS_PEOPLE, TITLE, TITLE_BAR } from './constants';
 ...
 export type TPeople = TLayoutPage &amp;
   Pick&lt;TReturnUsePeople, 'people' | 'anomaly' | 'refetch'&gt; &amp; {
@@ -1880,6 +1887,7 @@ const People = ({ titleBar = TITLE_BAR, title = TITLE, people, headers = TABLE_H
 import Loader, { TLoader, setLoaderMode } from 'shared/components/Loader';
 import Resilience from 'shared/components/Resilience';
 import Table, { setDisplay } from 'shared/components/Table';
+import { ENDPOINT, SERVICE_NAME, TABLE_HEADERS_PEOPLE, TITLE, TITLE_BAR } from './constants';
 ...
 export type TPeople = TLayoutPage &amp;
   Pick&lt;TReturnUsePeople, 'people' | 'anomaly' | 'refetch'&gt; &amp; {
@@ -1899,11 +1907,12 @@ const People = ({ titleBar = TITLE_BAR, title = TITLE, people, headers = TABLE_H
 );</textarea></pre>
               <pre class="code-wrapper--notes fragment fade-in-then-out"> 
                 <div class="sg-notes">
-                  <div class="sg-note" style="top: 362.5px"><span class="sg-note__content">On ajoute le composant Resilience <br/>qui affichera un fallback en cas d'anomalie</span></div>
-                </div><code class="language-javascript sg-code  sg-code--no-max-height js-code  js-code--no-max-height" data-trim="data-trim" data-line-numbers="16,18" data-ln-start-from="">...
+                  <div class="sg-note" style="top: 386px"><span class="sg-note__content">On ajoute le composant Resilience <br/>qui affichera un fallback en cas d'anomalie</span></div>
+                </div><code class="language-javascript sg-code  sg-code--no-max-height js-code  js-code--no-max-height" data-trim="data-trim" data-line-numbers="17,19" data-ln-start-from="">...
 import Loader, { TLoader, setLoaderMode } from 'shared/components/Loader';
 import Resilience from 'shared/components/Resilience';
 import Table, { setDisplay } from 'shared/components/Table';
+import { ENDPOINT, SERVICE_NAME, TABLE_HEADERS_PEOPLE, TITLE, TITLE_BAR } from './constants';
 ...
 export type TPeople = TLayoutPage &amp;
   Pick&lt;TReturnUsePeople, 'people' | 'anomaly' | 'refetch'&gt; &amp; {
@@ -1925,6 +1934,7 @@ const People = ({ titleBar = TITLE_BAR, title = TITLE, people, headers = TABLE_H
 import Loader, { TLoader, setLoaderMode } from 'shared/components/Loader';
 import Resilience from 'shared/components/Resilience';
 import Table, { setDisplay } from 'shared/components/Table';
+import { ENDPOINT, SERVICE_NAME, TABLE_HEADERS_PEOPLE, TITLE, TITLE_BAR } from './constants';
 ...
 export type TPeople = TLayoutPage &amp;
   Pick&lt;TReturnUsePeople, 'people' | 'anomaly' | 'refetch'&gt; &amp; {
@@ -1945,10 +1955,11 @@ const People = ({ titleBar = TITLE_BAR, title = TITLE, people, headers = TABLE_H
               <pre class="code-wrapper--notes fragment fade-in-then-out"> 
                 <div class="sg-notes">
                   <div class="sg-note" style="top: 386px"><span class="sg-note__content">On ajoute le composant Table <br/>qui affichera le tableau si tout est ok</span></div>
-                </div><code class="language-javascript sg-code  sg-code--no-max-height js-code  js-code--no-max-height" data-trim="data-trim" data-line-numbers="17" data-ln-start-from="">...
+                </div><code class="language-javascript sg-code  sg-code--no-max-height js-code  js-code--no-max-height" data-trim="data-trim" data-line-numbers="18" data-ln-start-from="">...
 import Loader, { TLoader, setLoaderMode } from 'shared/components/Loader';
 import Resilience from 'shared/components/Resilience';
 import Table, { setDisplay } from 'shared/components/Table';
+import { ENDPOINT, SERVICE_NAME, TABLE_HEADERS_PEOPLE, TITLE, TITLE_BAR } from './constants';
 ...
 export type TPeople = TLayoutPage &amp;
   Pick&lt;TReturnUsePeople, 'people' | 'anomaly' | 'refetch'&gt; &amp; {
@@ -1970,6 +1981,7 @@ const People = ({ titleBar = TITLE_BAR, title = TITLE, people, headers = TABLE_H
 import Loader, { TLoader, setLoaderMode } from 'shared/components/Loader';
 import Resilience from 'shared/components/Resilience';
 import Table, { setDisplay } from 'shared/components/Table';
+import { ENDPOINT, SERVICE_NAME, TABLE_HEADERS_PEOPLE, TITLE, TITLE_BAR } from './constants';
 ...
 export type TPeople = TLayoutPage &amp;
   Pick&lt;TReturnUsePeople, 'people' | 'anomaly' | 'refetch'&gt; &amp; {
@@ -2302,7 +2314,7 @@ import { computeInfos, usePeople } from '../People';</textarea>
             </div>
           </section>
           <section class="sg-exo1-solution" id="exo1-solution" data-background="" data-background-transition="fade" data-auto-animate="data-auto-animate">           
-            <h2>Solution</h2><span class="file">Dispo sur la branche feature/dojo-starter sur <a href="https://github.com/samuel-gomez/react-starter-vitejs/commit/72286e1dfe310057817db6abe7221479a3cd3f89" target="blank">Github</a></span>
+            <h2>Solution</h2><span class="file">Dispo sur la branche feature/dojo sur <a href="https://github.com/samuel-gomez/react-starter-vitejs/commit/72286e1dfe310057817db6abe7221479a3cd3f89" target="blank">Github</a></span>
           </section>
         </section>
         <section class="sg-exo2" id="exo2" data-background="" data-background-transition="fade">
@@ -2348,7 +2360,7 @@ import { computeInfos, usePeople } from '../People';</textarea>
             </ul>
           </section>
           <section class="sg-exo1-solution" id="exo1-solution" data-background="" data-background-transition="fade" data-auto-animate="data-auto-animate">           
-            <h2>Solution</h2><span class="file">Dispo sur la branche feature/dojo-starter sur <a href="https://github.com/samuel-gomez/react-starter-vitejs/commit/f6a8604225bc6f7d8a437b5d4199f6ced97a8bfc" target="blank">Github</a></span>
+            <h2>Solution</h2><span class="file">Dispo sur la branche feature/dojo sur <a href="https://github.com/samuel-gomez/react-starter-vitejs/commit/f6a8604225bc6f7d8a437b5d4199f6ced97a8bfc" target="blank">Github</a></span>
           </section>
         </section>
       </div>

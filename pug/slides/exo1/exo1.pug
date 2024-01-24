@@ -64,7 +64,7 @@
                   +Code({ dataLineNumbers: false, content : 'npm t People.spec.tsx'})   
             span.file Récupérez le code généré dans le terminal
             br
-            +Img({img:'guerkin-test-fail.jpg', alt:"guerkin test fail"})
+            +Img({img:'guerkin-test-fail.jpg', alt:"gherkin test fail"})
             br
             span.file #{rootPagePeople}__tests__/People.spec.tsx 
             pre(data-id="code-animation")               
@@ -90,7 +90,7 @@
                   +Code({ modifier:"no-max-height", content :files.testPeople[3], dataLineNumbers: "1,5, 11-13" })     
       +Section({ name :'exo1-cucumber-6', autoAnimate: true })           
             h2 Utiliser les scénarios type
-            span.file #{rootFeature}People/People.spec.tsx
+            span.file #{rootPagePeople}People/People.spec.tsx
             pre.code-wrapper--notes(data-id="code-animation")  
                   +Notes({ notes: notes.testPeople3 })
                   +Code({ modifier:"no-max-height", content :files.testPeople[4], dataLineNumbers: "4-6,9, 12-15, 17-27" })
@@ -209,22 +209,22 @@
             .r-stack
                   pre.code-wrapper--notes.fragment.fade-in-then-out  
                         +Notes({ notes: notes.people[0], fragment: false }) 
-                        +Code({ modifier:"no-max-height", content : files.people[5],  dataLineNumbers: "2-4"  }) 
+                        +Code({ modifier:"no-max-height", content : files.people[5],  dataLineNumbers: "2-5"  }) 
                   pre.code-wrapper--notes.fragment.fade-in-then-out  
                         +Notes({ notes: notes.people[1], fragment: false })
-                        +Code({ modifier:"no-max-height", content : files.people[5],  dataLineNumbers: "6-10"  }) 
+                        +Code({ modifier:"no-max-height", content : files.people[5],  dataLineNumbers: "7-11"  }) 
                   pre.code-wrapper--notes.fragment.fade-in-then-out  
                         +Notes({ notes: notes.people[2], fragment: false })
-                        +Code({ modifier:"no-max-height", content : files.people[5],  dataLineNumbers: "12"  }) 
+                        +Code({ modifier:"no-max-height", content : files.people[5],  dataLineNumbers: "13"  }) 
                   pre.code-wrapper--notes.fragment.fade-in-then-out  
                         +Notes({ notes: notes.people[3], fragment: false })
-                        +Code({ modifier:"no-max-height", content : files.people[5],  dataLineNumbers: "15,19"  }) 
+                        +Code({ modifier:"no-max-height", content : files.people[5],  dataLineNumbers: "16,20"  }) 
                   pre.code-wrapper--notes.fragment.fade-in-then-out  
                         +Notes({ notes: notes.people[4], fragment: false })
-                        +Code({ modifier:"no-max-height", content : files.people[5],  dataLineNumbers: "16,18"  })
+                        +Code({ modifier:"no-max-height", content : files.people[5],  dataLineNumbers: "17,19"  })
                   pre.code-wrapper--notes.fragment.fade-in-then-out  
                         +Notes({ notes: notes.people[5], fragment: false })
-                        +Code({ modifier:"no-max-height", content : files.people[5],  dataLineNumbers: "17"  }) 
+                        +Code({ modifier:"no-max-height", content : files.people[5],  dataLineNumbers: "18"  })
       +Section({ name :'exo1-coverage', autoAnimate: true })             
             h2 Couverture de test
             span.file Lancer la commande suivante :
